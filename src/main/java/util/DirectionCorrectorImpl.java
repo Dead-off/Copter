@@ -30,6 +30,9 @@ public class DirectionCorrectorImpl implements DirectionCorrector {
             return false;
         }
         for (double value : directionPair) {
+            if (Double.isNaN(value) || Double.isInfinite(value)) {
+                return false;
+            }
             if (value < 0 || value > 1) {
                 return false;
             }

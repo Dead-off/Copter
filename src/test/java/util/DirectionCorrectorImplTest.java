@@ -40,6 +40,14 @@ public class DirectionCorrectorImplTest extends Assert {
         directionBuilder = CopterDirection.Direction.newBuilder();
         directionBuilder.setRotateLeft(0.1).setRotateRight(0.3);
         assertFalse(corrector.isCorrectDirectionMessage(directionBuilder.build()));
+
+        directionBuilder = CopterDirection.Direction.newBuilder();
+        directionBuilder.setRotateLeft(Double.NaN);
+        assertFalse(corrector.isCorrectDirectionMessage(directionBuilder.build()));
+
+        directionBuilder = CopterDirection.Direction.newBuilder();
+        directionBuilder.setForward(Double.NEGATIVE_INFINITY);
+        assertFalse(corrector.isCorrectDirectionMessage(directionBuilder.build()));
     }
 
 }
