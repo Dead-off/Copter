@@ -4,6 +4,6 @@ import proto.CopterDirection;
 
 public interface PowerCalculator {
 
-    QuadEnginePowerContainer calculateEnginesPower(CopterDirection direction);
+    QuadEnginePowerContainer calculateEnginesPower(CopterDirection.Direction direction);
 
 }
