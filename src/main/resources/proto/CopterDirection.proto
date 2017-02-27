@@ -3,8 +3,11 @@ option java_package = "proto";
 option java_outer_classname = "CopterDirection";
 
 message Direction {
-  double BackForward = 1;
-  double LeftRight = 2;
-  double VerticalLeftRight = 3;
-  double power = 4;
+  double forward = 1;
+  double backward = 2;
+  double left = 3;
+  double right = 4;
+  double rotateLeft = 5;
+  double rotateRight = 6;
+  double power = 7;
 }
