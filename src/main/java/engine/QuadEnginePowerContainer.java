@@ -54,6 +54,19 @@ public class QuadEnginePowerContainer {
         return Double.compare(that.rightBackEnginePower, rightBackEnginePower) == 0;
     }
 
+    public boolean equalsWithEps(Object o, double eps) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        QuadEnginePowerContainer that = (QuadEnginePowerContainer) o;
+        if (Math.abs(that.leftBackEnginePower - leftBackEnginePower) > eps) return false;
+        if (Math.abs(that.leftFrontEnginePower - leftFrontEnginePower) > eps) return false;
+        if (Math.abs(that.rightBackEnginePower - rightBackEnginePower) > eps) return false;
+        if (Math.abs(that.rightFrontEnginePower - rightFrontEnginePower) > eps) return false;
+
+        return true;
+    }
+
     @Override
     public int hashCode() {
         int result;
