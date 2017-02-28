@@ -40,15 +40,15 @@ public class PowerCalculatorImpl implements PowerCalculator {
             }
             boolean isRotateLeft = (left != 0);
             if (isRotateLeft) {
-                rightFront *= multiplier;
-                leftBack *= multiplier;
-                leftFront /= multiplier;
-                rightBack /= multiplier;
-            } else {
                 rightFront /= multiplier;
                 leftBack /= multiplier;
                 leftFront *= multiplier;
                 rightBack *= multiplier;
+            } else {
+                rightFront *= multiplier;
+                leftBack *= multiplier;
+                leftFront /= multiplier;
+                rightBack /= multiplier;
             }
         }
 
