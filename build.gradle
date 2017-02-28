@@ -41,7 +41,7 @@ protobuf {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'com.google.protobuf:protobuf-java:3.2.0'
-    compile 'com.martiansoftware:jsap:2.1'
-    compile 'com.pi4j:pi4j-core:1.1'
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.2.0'
+    compile group: 'com.martiansoftware', name: 'jsap', version: '2.1'
+    compile group: 'com.pi4j', name: 'pi4j-core', version: '1.1'
 }
