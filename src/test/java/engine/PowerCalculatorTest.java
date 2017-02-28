@@ -30,18 +30,24 @@ public class PowerCalculatorTest extends Assert {
         directionBuilder.setPower(0.7);
         directionBuilder.setRotateRight(0.6);
         directionBuilder.setForward(0.5);
-        double defaultPower = PowerCalculatorImpl.DEFAULT_POWER;
         actual = calculator.calculateEnginesPower(directionBuilder.build());
         expected = new QuadEnginePowerContainer(
-                defaultPower * 0.7 / ((1 + MULTIPLIER * 0.5) * (1 + MULTIPLIER * 0.6))
-                , defaultPower * (1 + MULTIPLIER * 0.5) * (1 + MULTIPLIER * 0.6) * 0.7
-                , defaultPower * 0.7 * (1 + MULTIPLIER * 0.6) / (1 + MULTIPLIER * 0.5)
-                , defaultPower * 0.7 * (1 + MULTIPLIER * 0.5) / (1 + MULTIPLIER * 0.6));
-        assertEquals(expected.getLeftFrontEnginePower(), actual.getLeftFrontEnginePower(), EPS);
-        assertEquals(expected.getLeftBackEnginePower(), actual.getLeftBackEnginePower(), EPS);
-        assertEquals(expected.getRightBackEnginePower(), actual.getRightBackEnginePower(), EPS);
-        assertEquals(expected.getRightFrontEnginePower(), actual.getRightFrontEnginePower(), EPS);
+                DEFAULT_POWER * 0.7 / ((1 + MULTIPLIER * 0.5) * (1 + MULTIPLIER * 0.6))
+                , DEFAULT_POWER * (1 + MULTIPLIER * 0.5) * (1 + MULTIPLIER * 0.6) * 0.7
+                , DEFAULT_POWER * 0.7 * (1 + MULTIPLIER * 0.6) / (1 + MULTIPLIER * 0.5)
+                , DEFAULT_POWER * 0.7 * (1 + MULTIPLIER * 0.5) / (1 + MULTIPLIER * 0.6));
+        assertTrue(expected.equalsWithEps(actual, EPS));
 
+        directionBuilder = CopterDirection.Direction.newBuilder();
+        directionBuilder.setPower(0.9);
+        directionBuilder.setLeft(1.0);
+        actual = calculator.calculateEnginesPower(directionBuilder.build());
+        expected = new QuadEnginePowerContainer(
+                DEFAULT_POWER * 0.9 / (1 + MULTIPLIER)
+                , DEFAULT_POWER * 0.9 / (1 + MULTIPLIER)
+                , DEFAULT_POWER * 0.9 * (1 + MULTIPLIER)
+                , DEFAULT_POWER * 0.9 * (1 + MULTIPLIER));
+        assertTrue(expected.equalsWithEps(actual, EPS));
     }
 
     @Test(expected = IllegalArgumentException.class)
