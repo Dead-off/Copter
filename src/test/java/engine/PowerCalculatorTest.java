@@ -32,12 +32,15 @@ public class PowerCalculatorTest extends Assert {
         directionBuilder.setForward(0.5);
         double defaultPower = PowerCalculatorImpl.DEFAULT_POWER;
         actual = calculator.calculateEnginesPower(directionBuilder.build());
-        expected = new QuadEnginePowerContainer(defaultPower * 0.7 / ((1 + MULTIPLIER * 0.5) * (1 + MULTIPLIER * 0.6))
-                , defaultPower * (1 + MULTIPLIER * 0.5) * (1 + MULTIPLIER * 0.6) * 0.7, defaultPower * 0.7, defaultPower * 0.7);
+        expected = new QuadEnginePowerContainer(
+                defaultPower * 0.7 / ((1 + MULTIPLIER * 0.5) * (1 + MULTIPLIER * 0.6))
+                , defaultPower * (1 + MULTIPLIER * 0.5) * (1 + MULTIPLIER * 0.6) * 0.7
+                , defaultPower * 0.7 * (1 + MULTIPLIER * 0.6) / (1 + MULTIPLIER * 0.5)
+                , defaultPower * 0.7 * (1 + MULTIPLIER * 0.5) / (1 + MULTIPLIER * 0.6));
+        assertEquals(expected.getLeftFrontEnginePower(), actual.getLeftFrontEnginePower(), EPS);
         assertEquals(expected.getLeftBackEnginePower(), actual.getLeftBackEnginePower(), EPS);
         assertEquals(expected.getRightBackEnginePower(), actual.getRightBackEnginePower(), EPS);
         assertEquals(expected.getRightFrontEnginePower(), actual.getRightFrontEnginePower(), EPS);
-        assertEquals(expected.getLeftFrontEnginePower(), actual.getLeftFrontEnginePower(), EPS);
 
     }
 
