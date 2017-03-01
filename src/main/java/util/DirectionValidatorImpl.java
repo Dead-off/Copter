@@ -2,7 +2,7 @@ package util;
 
 import proto.CopterDirection;
 
-public class DirectionCorrectorImpl implements DirectionCorrector {
+public class DirectionValidatorImpl implements DirectionValidator {
 
     @Override
     public boolean isCorrectDirectionMessage(CopterDirection.Direction direction) {

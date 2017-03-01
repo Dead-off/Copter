@@ -1,13 +1,12 @@
 package facade;
 
 import engine.CopterController;
-import engine.QuadEnginePowerContainer;
 import engine.QuadEnginesFactory;
 import proto.CopterDirection;
 
 public class QuadCopter implements Copter {
 
-    private final CopterController<QuadEnginePowerContainer> copterController;
+    private final CopterController copterController;
 
     public QuadCopter() {
         this.copterController = QuadEnginesFactory.INSTANCE.getCopterController();

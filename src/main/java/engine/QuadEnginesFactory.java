@@ -1,6 +1,6 @@
 package engine;
 
-public class QuadEnginesFactory implements EnginesControlFactory<QuadEnginePowerContainer> {
+public class QuadEnginesFactory implements EnginesControlFactory {
 
     public static final QuadEnginesFactory INSTANCE = new QuadEnginesFactory();
 
@@ -8,7 +8,7 @@ public class QuadEnginesFactory implements EnginesControlFactory<QuadEnginePower
     }
 
     @Override
-    public CopterController<QuadEnginePowerContainer> getCopterController() {
+    public CopterController getCopterController() {
         return new GPIOQuadCopterController();
     }
 }

@@ -1,6 +1,6 @@
 package engine;
 
-public class GPIOQuadCopterController implements CopterController<QuadEnginePowerContainer> {
+public class GPIOQuadCopterController implements CopterController {
 
     //todo implementation
 //    пока не очень ясно, как будут работать esc. Возможно потребуется ещё что-то типа GPIOWriter

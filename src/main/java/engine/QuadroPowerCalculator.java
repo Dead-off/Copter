@@ -1,22 +1,22 @@
 package engine;
 
 import proto.CopterDirection;
-import util.DirectionCorrector;
-import util.DirectionCorrectorImpl;
+import util.DirectionValidator;
+import util.DirectionValidatorImpl;
 
-public class QuadroPowerCalculator implements PowerCalculator<QuadEnginePowerContainer> {
+public class QuadroPowerCalculator implements PowerCalculator {
 
     static final double DEFAULT_POWER = 0.7;
     static final double MAX_MULTIPLIER = 0.1;
-    private final DirectionCorrector directionCorrector;
+    private final DirectionValidator directionValidator;
 
     public QuadroPowerCalculator() {
-        directionCorrector = new DirectionCorrectorImpl();
+        directionValidator = new DirectionValidatorImpl();
     }
 
     @Override
     public QuadEnginePowerContainer calculateEnginesPower(CopterDirection.Direction direction) {
-        if (!directionCorrector.isCorrectDirectionMessage(direction)) {
+        if (!directionValidator.isCorrectDirectionMessage(direction)) {
             throw new IllegalArgumentException("direction values are incorrect!");
         }
         CalculatorHelper helper = new CalculatorHelper();

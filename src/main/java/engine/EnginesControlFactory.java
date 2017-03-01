@@ -1,7 +1,7 @@
 package engine;
 
-public interface EnginesControlFactory<T> {
+public interface EnginesControlFactory {
 
-    CopterController<T> getCopterController();
+    CopterController getCopterController();
 
 }

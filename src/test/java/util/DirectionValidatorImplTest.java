@@ -4,12 +4,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import proto.CopterDirection;
 
-public class DirectionCorrectorImplTest extends Assert {
+public class DirectionValidatorImplTest extends Assert {
 
     @Test
     public void isCorrectDirectionMessageTest() {
         CopterDirection.Direction.Builder directionBuilder = CopterDirection.Direction.newBuilder();
-        DirectionCorrector corrector = new DirectionCorrectorImpl();
+        DirectionValidator corrector = new DirectionValidatorImpl();
 
         assertTrue(corrector.isCorrectDirectionMessage(directionBuilder.build()));
 
