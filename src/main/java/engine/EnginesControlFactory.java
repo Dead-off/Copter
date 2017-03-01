@@ -4,6 +4,4 @@ public interface EnginesControlFactory {
 
     CopterController getCopterController();
 
-    PowerCalculator getPowerCalculator();
-
 }

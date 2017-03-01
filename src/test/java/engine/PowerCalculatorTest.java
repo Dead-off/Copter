@@ -7,12 +7,12 @@ import proto.CopterDirection;
 public class PowerCalculatorTest extends Assert {
 
     private final static double EPS = 0.000001;
-    private final static double DEFAULT_POWER = PowerCalculatorImpl.DEFAULT_POWER;
-    private final static double MULTIPLIER = PowerCalculatorImpl.MAX_MULTIPLIER;
+    private final static double DEFAULT_POWER = QuadroPowerCalculator.DEFAULT_POWER;
+    private final static double MULTIPLIER = QuadroPowerCalculator.MAX_MULTIPLIER;
 
     @Test
     public void calculatePowerEngineTest() {
-        PowerCalculator calculator = new PowerCalculatorImpl();
+        PowerCalculator<QuadEnginePowerContainer> calculator = new QuadroPowerCalculator();
 
         CopterDirection.Direction.Builder directionBuilder = CopterDirection.Direction.newBuilder();
         directionBuilder.setPower(0);
@@ -52,7 +52,7 @@ public class PowerCalculatorTest extends Assert {
 
     @Test(expected = IllegalArgumentException.class)
     public void calculatePowerEngineTestIllegalDirection() {
-        PowerCalculator calculator = new PowerCalculatorImpl();
+        PowerCalculator calculator = new QuadroPowerCalculator();
         CopterDirection.Direction.Builder directionBuilder = CopterDirection.Direction.newBuilder();
         directionBuilder.setLeft(0.3);
         directionBuilder.setRight(0.3);
@@ -61,7 +61,7 @@ public class PowerCalculatorTest extends Assert {
 
     @Test(expected = IllegalArgumentException.class)
     public void calculatePowerEngineTestNANDirection() {
-        PowerCalculator calculator = new PowerCalculatorImpl();
+        PowerCalculator calculator = new QuadroPowerCalculator();
         CopterDirection.Direction.Builder directionBuilder = CopterDirection.Direction.newBuilder();
         directionBuilder.setLeft(Double.NaN);
         calculator.calculateEnginesPower(directionBuilder.build());

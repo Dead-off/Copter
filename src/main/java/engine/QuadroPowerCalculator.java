@@ -4,13 +4,13 @@ import proto.CopterDirection;
 import util.DirectionCorrector;
 import util.DirectionCorrectorImpl;
 
-public class PowerCalculatorImpl implements PowerCalculator {
+public class QuadroPowerCalculator implements PowerCalculator<QuadEnginePowerContainer> {
 
     static final double DEFAULT_POWER = 0.7;
     static final double MAX_MULTIPLIER = 0.1;
     private final DirectionCorrector directionCorrector;
 
-    public PowerCalculatorImpl() {
+    public QuadroPowerCalculator() {
         directionCorrector = new DirectionCorrectorImpl();
     }
 

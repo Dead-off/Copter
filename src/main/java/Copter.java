@@ -1,6 +1,6 @@
 import proto.CopterDirection;
 
-public interface QuadCopter {
+public interface Copter<T> {
 
     void handleDirectionChange(CopterDirection newDirection);
 

@@ -1,7 +1,7 @@
 package engine;
 
-public interface CopterController {
+public interface CopterController<T> {
 
-    void setEnginesPower(QuadEnginePowerContainer powerContainer);
+    void setEnginesPower(T powerContainer);
 
 }

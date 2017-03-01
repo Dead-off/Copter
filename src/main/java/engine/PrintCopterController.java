@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class PrintCopterController implements CopterController, Closeable {
+public class PrintCopterController implements CopterController<QuadEnginePowerContainer>, Closeable {
 
     private final OutputStream out;
 
