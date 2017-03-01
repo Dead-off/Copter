@@ -1,9 +1,12 @@
 package factory;
 
+import control.UserController;
 import engine.EnginesControlFactory;
+import facade.Copter;
 import org.junit.Test;
+import proto.CopterDirection;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MainFactoryTest {
 
@@ -11,8 +14,18 @@ public class MainFactoryTest {
     public void setEnginesTest() {
         EnginesControlFactory actual = () -> null;
         MainFactory.INSTANCE.setEnginesControlFactory(actual);
-        EnginesControlFactory expected = MainFactory.INSTANCE.getEnginesControlFactory();
-        assertEquals(expected, actual);
+        MainFactory.INSTANCE.setUserController(new UserController() {
+            @Override
+            public CopterDirection getCopterDirection() {
+                return null;
+            }
+
+            @Override
+            public Copter getControlledCopter() {
+                return null;
+            }
+        });
+        assertTrue(MainFactory.INSTANCE.isConfigured());
     }
 
     @Test(expected = RuntimeException.class)

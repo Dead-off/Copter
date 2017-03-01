@@ -2,6 +2,7 @@ package facade;
 
 import engine.CopterController;
 import engine.QuadEnginesFactory;
+import factory.MainFactory;
 import proto.CopterDirection;
 
 public class QuadCopter implements Copter {
@@ -9,7 +10,7 @@ public class QuadCopter implements Copter {
     private final CopterController copterController;
 
     public QuadCopter() {
-        this.copterController = QuadEnginesFactory.INSTANCE.getCopterController();
+        this.copterController = MainFactory.INSTANCE.getEnginesControlFactory().getCopterController();
     }
 
     @Override

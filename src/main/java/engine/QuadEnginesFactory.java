@@ -2,9 +2,7 @@ package engine;
 
 public class QuadEnginesFactory implements EnginesControlFactory {
 
-    public static final QuadEnginesFactory INSTANCE = new QuadEnginesFactory();
-
-    private QuadEnginesFactory() {
+    public QuadEnginesFactory() {
     }
 
     @Override
