@@ -18,8 +18,16 @@ public class PrintCopterController implements CopterController<QuadEnginePowerCo
 
     @Override
     public void setEnginesPower(QuadEnginePowerContainer powerContainer) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(powerContainer.getLeftFrontEnginePower())
+                .append("  ")
+                .append(powerContainer.getRightFrontEnginePower())
+                .append("\n")
+                .append(powerContainer.getLeftBackEnginePower())
+                .append("  ")
+                .append(powerContainer.getRightBackEnginePower());
         try {
-            out.write(powerContainer.toString().getBytes());
+            out.write(sb.toString().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
