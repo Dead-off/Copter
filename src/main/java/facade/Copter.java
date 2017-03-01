@@ -1,6 +1,8 @@
+package facade;
+
 import proto.CopterDirection;
 
-public interface Copter<T> {
+public interface Copter {
 
     void handleDirectionChange(CopterDirection newDirection);
 
