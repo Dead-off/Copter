@@ -24,11 +24,8 @@ public class CommandLineController implements UserController, Closeable {
     @Override
     public void run() {
         final Scanner scanner = new Scanner(inputStream);
+        printHelp();
         while (scanner.hasNext()) {
-            System.out.println("type f/b:[0-100], l/r:[0-100], cw/ccw:[0-100], p:[0-100]");
-            System.out.println("e.g. max power, fly forward 60% and rotate cw 50%");
-            System.out.println("f:60 cw:50 p:100");
-            System.out.println("exit for exit and s for fast set all direction to zero and power to 40%");
             String command = scanner.nextLine();
             if ("exit".equalsIgnoreCase(command)) {
                 break;
@@ -37,9 +34,17 @@ public class CommandLineController implements UserController, Closeable {
                 CopterDirection.Direction direction = parseCommand(command);
                 copter.handleDirectionChange(direction);
             } catch (IllegalArgumentException e) {
+                printHelp();
                 e.printStackTrace();
             }
         }
+    }
+
+    private void printHelp() {
+        System.out.println("type f/b:[0-100], l/r:[0-100], cw/ccw:[0-100], p:[0-100]");
+        System.out.println("e.g. max power, fly forward 60% and rotate cw 50%");
+        System.out.println("f:60 cw:50 p:100");
+        System.out.println("exit for exit and s for fast set all direction to zero and power to 40%");
     }
 
     private CopterDirection.Direction parseCommand(String command) throws IllegalArgumentException {
