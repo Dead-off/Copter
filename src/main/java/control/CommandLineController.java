@@ -50,7 +50,7 @@ public class CommandLineController implements UserController, Closeable {
     private CopterDirection.Direction parseCommand(String command) throws IllegalArgumentException {
         CopterDirection.Direction.Builder builder = CopterDirection.Direction.newBuilder();
         if ("s".equalsIgnoreCase(command)) {
-            return builder.setPower(0.3).build();
+            return builder.setPower(0.4).build();
         }
         for (String s : command.split(" ")) {
             String[] dv = s.split(":");
