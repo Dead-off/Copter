@@ -1,5 +1,6 @@
 package factory;
 
+import control.CommandLineController;
 import control.UserController;
 import engine.EnginesControlFactory;
 import facade.Copter;
@@ -14,17 +15,7 @@ public class MainFactoryTest {
     public void setEnginesTest() {
         EnginesControlFactory actual = () -> null;
         MainFactory.INSTANCE.setEnginesControlFactory(actual);
-        MainFactory.INSTANCE.setUserController(new UserController() {
-            @Override
-            public CopterDirection getCopterDirection() {
-                return null;
-            }
-
-            @Override
-            public Copter getControlledCopter() {
-                return null;
-            }
-        });
+        MainFactory.INSTANCE.setUserController(new CommandLineController());
         assertTrue(MainFactory.INSTANCE.isConfigured());
     }
 
