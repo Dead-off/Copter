@@ -4,6 +4,8 @@ import com.martiansoftware.jsap.FlaggedOption;
 import com.martiansoftware.jsap.JSAP;
 import com.martiansoftware.jsap.JSAPException;
 import com.martiansoftware.jsap.JSAPResult;
+import control.CommandLineController;
+import control.NetworkController;
 import control.UserController;
 import engine.EnginesControlFactory;
 import engine.PrintControllerFactory;
@@ -58,11 +60,10 @@ public class FactoryConfigurator {
     private UserController parseUserController(String type) {
         switch (type) {
             case "REMOTE": {
-//                factory.setUserController();
+                factory.setUserController(new NetworkController());
             }
-            ;//todo
             case "CL": {
-//                factory.setUserController();
+                factory.setUserController(new CommandLineController());
             }
         }
         return null;
