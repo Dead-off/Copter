@@ -78,11 +78,11 @@ public class CommandLineController implements UserController {
 
     @Override
     public void setCopter(Copter copter) {
-
+        this.copter = copter;
     }
 
     @Override
     public Copter getCopter() {
-        return null;
+        return copter;
     }
 }
