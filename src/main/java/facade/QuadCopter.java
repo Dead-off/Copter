@@ -1,7 +1,6 @@
 package facade;
 
 import engine.CopterController;
-import engine.QuadEnginesFactory;
 import factory.MainFactory;
 import proto.CopterDirection;
 
@@ -14,7 +13,7 @@ public class QuadCopter implements Copter {
     }
 
     @Override
-    public void handleDirectionChange(CopterDirection newDirection) {
+    public void handleDirectionChange(CopterDirection.Direction newDirection) {
 
     }
 
