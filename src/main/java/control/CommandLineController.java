@@ -3,15 +3,25 @@ package control;
 import facade.Copter;
 import proto.CopterDirection;
 
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class CommandLineController implements UserController {
 
     private Copter copter;
+    private final InputStream inputStream;
+
+    public CommandLineController() {
+        this.inputStream = System.in;
+    }
+
+    CommandLineController(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
 
     @Override
     public void run() {
-        final Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(inputStream);
         while (true) {
             System.out.println("type f/b:[0-100], l/r:[0-100], cw/ccw:[0-100], p:[0-100]");
             System.out.println("e.g. max power, fly forward 60% and rotate cw 50%");
