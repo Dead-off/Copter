@@ -1,13 +1,26 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import com.martiansoftware.jsap.JSAPException;
+import control.UserController;
+import facade.QuadCopter;
+import factory.FactoryConfigurator;
+import factory.MainFactory;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+
+        FactoryConfigurator configurator = new FactoryConfigurator(MainFactory.INSTANCE);
+        try {
+            configurator.configureFactoryFromCLArgs(args);
+        } catch (JSAPException e) {
+            System.out.println("error in cl args, check helps");
+            e.printStackTrace();
+            return;
+        }
+        UserController userController = MainFactory.INSTANCE.getUserController();
+        userController.setCopter(new QuadCopter());
+        userController.run();
+
+
 //        List<Integer> iters = new ArrayList<>();
 //        Lock l = new ReentrantLock();
 //        l.lock();
