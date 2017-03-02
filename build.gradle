@@ -13,6 +13,16 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'com.google.protobuf'
+apply plugin: 'application'
+
+mainClassName = "Main"
+
+run {
+    if (project.hasProperty("arg")) {
+        args (arg.split(' '))
+    }
+    standardInput System.in
+}
 
 repositories {
     mavenCentral()
