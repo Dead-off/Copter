@@ -47,11 +47,10 @@ public class FactoryConfigurator {
     private EnginesControlFactory parseEnginesFactory(String type) {
         switch (type) {
             case "GPIO": {
-                factory.setEnginesControlFactory(new QuadEnginesFactory());
+                return new QuadEnginesFactory();
             }
-            ;
             case "PRINT": {
-                factory.setEnginesControlFactory(new PrintControllerFactory());
+                return new PrintControllerFactory();
             }
         }
         return null;
@@ -60,10 +59,10 @@ public class FactoryConfigurator {
     private UserController parseUserController(String type) {
         switch (type) {
             case "REMOTE": {
-                factory.setUserController(new NetworkController());
+                return new NetworkController();
             }
             case "CL": {
-                factory.setUserController(new CommandLineController());
+                return new CommandLineController();
             }
         }
         return null;
