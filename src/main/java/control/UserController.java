@@ -1,12 +1,13 @@
 package control;
 
 import facade.Copter;
-import proto.CopterDirection;
 
-public interface UserController {
+public interface UserController  {
 
-    CopterDirection getCopterDirection();
+    void run();
 
-    Copter getControlledCopter();
+    void setCopter(Copter copter);
+
+    Copter getCopter();
 
 }
