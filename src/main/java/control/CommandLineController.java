@@ -3,10 +3,12 @@ package control;
 import facade.Copter;
 import proto.CopterDirection;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class CommandLineController implements UserController {
+public class CommandLineController implements UserController, Closeable {
 
     private Copter copter;
     private final InputStream inputStream;
@@ -22,7 +24,7 @@ public class CommandLineController implements UserController {
     @Override
     public void run() {
         final Scanner scanner = new Scanner(inputStream);
-        while (true) {
+        while (scanner.hasNext()) {
             System.out.println("type f/b:[0-100], l/r:[0-100], cw/ccw:[0-100], p:[0-100]");
             System.out.println("e.g. max power, fly forward 60% and rotate cw 50%");
             System.out.println("f:60 cw:50 p:100");
@@ -94,5 +96,10 @@ public class CommandLineController implements UserController {
     @Override
     public Copter getCopter() {
         return copter;
+    }
+
+    @Override
+    public void close() throws IOException {
+        inputStream.close();
     }
 }
