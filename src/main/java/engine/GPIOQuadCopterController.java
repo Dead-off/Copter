@@ -1,5 +1,7 @@
 package engine;
 
+import com.pi4j.io.gpio.*;
+
 public class GPIOQuadCopterController implements CopterController {
 
     //todo implementation
@@ -10,6 +12,16 @@ public class GPIOQuadCopterController implements CopterController {
 
     @Override
     public void setEnginesPower(QuadEnginePowerContainer powerContainer) {
-//        тут будет парсинг мощности типа 0.7 в "крутить 70мс и не крутить 30мс
+        final GpioController gpio = GpioFactory.getInstance();
+
+        final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "MyLED", PinState.HIGH);
+        pin.setShutdownOptions(true, PinState.LOW);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+
+        }
+        pin.low();
+        gpio.shutdown();
     }
 }
