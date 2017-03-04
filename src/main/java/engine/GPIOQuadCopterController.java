@@ -15,6 +15,7 @@ public class GPIOQuadCopterController implements CopterController {
         final GpioController gpio = GpioFactory.getInstance();
 
         final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00, "MyLED", PinState.HIGH);
+        System.out.println("on");
         pin.setShutdownOptions(true, PinState.LOW);
         try {
             Thread.sleep(5000);
