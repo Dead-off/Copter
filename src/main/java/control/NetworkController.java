@@ -56,6 +56,7 @@ public class NetworkController implements UserController {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
+        copter.clientConnectionLost();
     }
 
     @Override
@@ -103,6 +104,7 @@ public class NetworkController implements UserController {
 
         @Override
         public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+            copter.clientConnectionLost();
             cause.printStackTrace();
             ctx.close();
         }
