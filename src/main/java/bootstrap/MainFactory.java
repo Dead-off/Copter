@@ -1,4 +1,4 @@
-package factory;
+package bootstrap;
 
 import control.UserController;
 import engine.EnginesControlFactory;

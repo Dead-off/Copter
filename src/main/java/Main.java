@@ -1,17 +1,27 @@
+import bootstrap.Arguments;
+import bootstrap.ArgumentsParser;
 import com.martiansoftware.jsap.JSAPException;
 import control.UserController;
 import facade.QuadCopter;
-import factory.FactoryConfigurator;
-import factory.MainFactory;
+import bootstrap.FactoryConfigurator;
+import bootstrap.MainFactory;
 
 public class Main {
 
     public static void main(String[] args) {
-
-        FactoryConfigurator configurator = new FactoryConfigurator(MainFactory.INSTANCE);
+        Arguments arguments;
         try {
-            configurator.configureFactoryFromCLArgs(args);
+            arguments = new ArgumentsParser().parse(args);
         } catch (JSAPException e) {
+            System.out.println("incorrect arguments format");
+            e.printStackTrace();
+            return;
+        }
+
+        FactoryConfigurator configurator = new FactoryConfigurator(MainFactory.INSTANCE, arguments);
+        try {
+            configurator.configure();
+        } catch (IllegalArgumentException e) {
             System.out.println("error in cl args, check helps");
             e.printStackTrace();
             return;

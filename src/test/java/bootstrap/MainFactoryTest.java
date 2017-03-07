@@ -1,11 +1,8 @@
-package factory;
+package bootstrap;
 
 import control.CommandLineController;
-import control.UserController;
 import engine.EnginesControlFactory;
-import facade.Copter;
 import org.junit.Test;
-import proto.CopterDirection;
 
 import static org.junit.Assert.assertTrue;
 

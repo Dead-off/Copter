@@ -4,7 +4,7 @@ import engine.CopterController;
 import engine.PowerCalculator;
 import engine.QuadEnginePowerContainer;
 import engine.QuadroPowerCalculator;
-import factory.MainFactory;
+import bootstrap.MainFactory;
 import proto.CopterDirection;
 
 public class QuadCopter implements Copter {
