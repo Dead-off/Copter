@@ -4,7 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class PrintCopterController implements CopterController, Closeable {
+public class PrintCopterController implements CopterController {
 
     private final OutputStream out;
 
@@ -34,7 +34,12 @@ public class PrintCopterController implements CopterController, Closeable {
     }
 
     @Override
-    public void close() throws IOException {
-        out.close();
+    public void close() {
+        try {
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("error in shutdown engine controller");
+        }
     }
 }

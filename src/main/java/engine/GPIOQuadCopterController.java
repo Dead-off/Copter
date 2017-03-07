@@ -25,4 +25,9 @@ public class GPIOQuadCopterController implements CopterController {
         pin.low();
         gpio.shutdown();
     }
+
+    @Override
+    public void close() {
+
+    }
 }

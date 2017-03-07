@@ -19,11 +19,6 @@ public class PrintCopterControllerTest {
         String expected = "0.1  0.3\n0.2  0.4";
         String actual = new String(os.toByteArray(), StandardCharsets.UTF_8);
         assertEquals(expected, actual);
-        try {
-            printController.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            assertEquals(1, 2);
-        }
+        printController.close();
     }
 }
