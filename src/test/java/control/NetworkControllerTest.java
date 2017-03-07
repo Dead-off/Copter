@@ -45,7 +45,7 @@ public class NetworkControllerTest {
         } catch (InterruptedException ignored) {
         }
         try (Socket socket = new Socket("127.0.0.1", 15127);
-             OutputStream os = socket.getOutputStream();) {
+             OutputStream os = socket.getOutputStream()) {
             os.write(expected.toByteArray());
             os.flush();
             try {
