@@ -10,6 +10,7 @@ public class ArgumentsParser {
     private final static String ENGINES_CONTROL_OPTION = "copterControl";
     private final static String USER_CONTROL_OPTION = "userControl";
     private final static String PORT = "port";
+    final static int DEFAULT_PORT = 9276;
 
     public Arguments parse(String[] args) throws JSAPException {
         JSAP jsap = getJSAP();
@@ -46,7 +47,7 @@ public class ArgumentsParser {
                 .setRequired(false)
                 .setShortFlag('p')
                 .setLongFlag(JSAP.NO_LONGFLAG)
-                .setDefault("9276");
+                .setDefault(String.valueOf(DEFAULT_PORT));
         userControl.setHelp("port for remote server");
 
         result.registerParameter(copterControl);
