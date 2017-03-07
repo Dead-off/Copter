@@ -25,6 +25,6 @@ public class QuadCopter implements Copter {
 
     @Override
     public void clientConnectionLost() {
-
+        copterController.close();
     }
 }

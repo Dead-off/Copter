@@ -1,5 +1,7 @@
 package control;
 
+import bootstrap.MainFactory;
+import engine.GPIOQuadCopterController;
 import facade.Copter;
 import proto.CopterDirection;
 
@@ -38,6 +40,7 @@ public class CommandLineController implements UserController, Closeable {
                 e.printStackTrace();
             }
         }
+        copter.clientConnectionLost();
     }
 
     private void printHelp() {
