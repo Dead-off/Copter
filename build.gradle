@@ -12,7 +12,6 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'com.google.protobuf'
 apply plugin: 'application'
 
 mainClassName = "Main"
@@ -27,26 +26,6 @@ run {
 repositories {
     mavenCentral()
     mavenLocal()
-}
-
-sourceSets {
-    main {
-        proto {
-            srcDir 'src/main/resources/proto'
-        }
-    }
-    test {
-        proto {
-            srcDir 'src/test/resources/proto'
-        }
-    }
-}
-
-protobuf {
-    protoc {
-        artifact = 'com.google.protobuf:protoc:3.0.0'
-    }
-    generateProtoTasks.generatedFilesBaseDir = 'src/'
 }
 
 dependencies {
