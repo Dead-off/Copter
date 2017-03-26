@@ -10,6 +10,7 @@ public class SoftwarePWMEmulator {
     private final AtomicInteger value = new AtomicInteger();
 
     private final int CYCLE_MCS = 20000;
+    private final int CYCLE_NANOS = CYCLE_MCS*1000;
 
     private final int DELAY_SHIFT_MS = 2;
 
@@ -23,8 +24,8 @@ public class SoftwarePWMEmulator {
                     pin.high();
                     mwait(System.nanoTime() + pulseDuration);
                     pin.low();
-                    long deadLine = (CYCLE_MCS - pulseDuration) * 1000 + System.nanoTime();
-                    long availableMsDelay = (CYCLE_MCS - pulseDuration) / 1000 - DELAY_SHIFT_MS;
+                    long deadLine = (CYCLE_NANOS - pulseDuration) + System.nanoTime();
+                    long availableMsDelay = (CYCLE_NANOS - pulseDuration) / 1000000 - DELAY_SHIFT_MS;
                     if (availableMsDelay > 0) {
                         Thread.sleep(availableMsDelay);
                     }
