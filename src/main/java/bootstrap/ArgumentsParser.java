@@ -48,7 +48,7 @@ public class ArgumentsParser {
                 .setShortFlag('p')
                 .setLongFlag(JSAP.NO_LONGFLAG)
                 .setDefault(String.valueOf(DEFAULT_PORT));
-        userControl.setHelp("port for remote server");
+        port.setHelp("port for remote server");
 
         result.registerParameter(copterControl);
         result.registerParameter(userControl);
