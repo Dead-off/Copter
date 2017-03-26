@@ -9,7 +9,9 @@ public class SoftwarePWMEmulator {
     private final Thread thread;
     private final AtomicInteger value = new AtomicInteger();
 
-    private final int cycle = 20000;//microsec
+    private final int CYCLE_MCS = 20000;
+
+    private final int DELAY_SHIFT_MS = 2;
 
     public SoftwarePWMEmulator(final GpioPinDigitalOutput pin) {
         this.value.set(5);
@@ -17,18 +19,18 @@ public class SoftwarePWMEmulator {
         thread = new Thread(() -> {
             try {
                 while (!Thread.interrupted()) {
-                    int pulseDuration = value.get() * 19000;
+                    int pulseDuration = value.get() * CYCLE_MCS;
                     pin.high();
                     mwait(System.nanoTime() + pulseDuration);
                     pin.low();
-                    long deadLine = (cycle-pulseDuration)*1000 + System.nanoTime();
-                    long msDelay = (cycle-pulseDuration)/1000;
-                    if (msDelay - 2 > 0) {
-                        Thread.sleep(msDelay - 2);
+                    long deadLine = (CYCLE_MCS - pulseDuration) * 1000 + System.nanoTime();
+                    long availableMsDelay = (CYCLE_MCS - pulseDuration) / 1000 - DELAY_SHIFT_MS;
+                    if (availableMsDelay > 0) {
+                        Thread.sleep(availableMsDelay);
                     }
                     mwait(deadLine);
                 }
-            }catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             pin.low();
