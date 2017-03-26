@@ -24,7 +24,7 @@ public class GPIOQuadCopterController implements CopterController {
         this.leftFrontPin = GPIO.provisionPwmOutputPin(RaspiPin.GPIO_26);
         this.rightBackPin = GPIO.provisionPwmOutputPin(RaspiPin.GPIO_23);
         this.leftBackPinOrigin = GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_29);
-        this.rightFrontPinOrigin = GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_06);
+        this.rightFrontPinOrigin = GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_16);
         this.leftBackPin = new SoftwarePWMEmulator(this.leftBackPinOrigin);
         this.rightFrontPin = new SoftwarePWMEmulator(this.rightFrontPinOrigin);
 
