@@ -25,7 +25,8 @@ public class PrintCopterController implements CopterController {
                 .append("\n")
                 .append(powerContainer.getLeftBackEnginePower())
                 .append("  ")
-                .append(powerContainer.getRightBackEnginePower());
+                .append(powerContainer.getRightBackEnginePower())
+                .append("\n-------------------------------\n");
         try {
             out.write(sb.toString().getBytes());
         } catch (IOException e) {
