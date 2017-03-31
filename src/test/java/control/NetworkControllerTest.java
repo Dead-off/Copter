@@ -35,6 +35,11 @@ public class NetworkControllerTest {
                 .setLeft(0.3)
                 .setRotateLeft(0.7)
                 .setPower(0.8).build();
+        CopterDirection.Direction expectedSecond = CopterDirection.Direction.newBuilder()
+                .setBackward(1)
+                .setLeft(0.7)
+                .setRotateLeft(0.7)
+                .setPower(0.8).build();
         serverThread.start();
         final Thread currentThread = Thread.currentThread();
         controller.setOnChannelRead(currentThread::interrupt);
@@ -53,12 +58,21 @@ public class NetworkControllerTest {
                 fail();
             } catch (InterruptedException ignored) {
             }
+            CopterDirection.Direction actual = directionReference.get();
+            assertEquals(expected, actual);
+            os.write(expectedSecond.toByteArray());
+            os.flush();
+            try {
+                Thread.sleep(1000);
+                fail();
+            } catch (InterruptedException ignored) {
+            }
+            actual = directionReference.get();
+            assertEquals(expectedSecond, actual);
         } catch (IOException e) {
             e.printStackTrace();
             fail();
         }
         serverThread.interrupt();
-        CopterDirection.Direction actual = directionReference.get();
-        assertEquals(expected, actual);
     }
 }
