@@ -12,7 +12,7 @@ public class PowerCalculatorTest extends Assert {
 
     @Test
     public void calculatePowerEngineTest() {
-        PowerCalculator calculator = new QuadroPowerCalculator();
+        PowerCalculator calculator = new QuadroPowerCalculator(1, 1, 1, 1);
 
         CopterDirection.Direction.Builder directionBuilder = CopterDirection.Direction.newBuilder();
         directionBuilder.setPower(0);

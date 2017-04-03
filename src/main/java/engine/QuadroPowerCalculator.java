@@ -7,11 +7,25 @@ import util.DirectionValidatorImpl;
 public class QuadroPowerCalculator implements PowerCalculator {
 
     static final double DEFAULT_POWER = 0.7;
-    static final double MAX_MULTIPLIER = 0.1;
+    static final double MAX_MULTIPLIER = 0.05;
+
+    private double leftFrontCorrector;
+    private double leftBackCorrector;
+    private double rightFrontCorrector;
+    private double rightBackCorrector;
+
     private final DirectionValidator directionValidator;
 
     public QuadroPowerCalculator() {
-        directionValidator = new DirectionValidatorImpl();
+        this(0.85, 1.05, 1.05, 0.85);
+    }
+
+    public QuadroPowerCalculator(double leftFrontCorrector, double leftBackCorrector, double rightFrontCorrector, double rightBackCorrector) {
+        this.leftFrontCorrector = leftFrontCorrector;
+        this.leftBackCorrector = leftBackCorrector;
+        this.rightFrontCorrector = rightFrontCorrector;
+        this.rightBackCorrector = rightBackCorrector;
+        this.directionValidator = new DirectionValidatorImpl();
     }
 
     @Override
@@ -26,12 +40,13 @@ public class QuadroPowerCalculator implements PowerCalculator {
         return helper.toContainer(direction.getPower());
     }
 
-    private static class CalculatorHelper {
+
+    private class CalculatorHelper {
         //        cw - clock wise ccw - counter clock wise
-        double leftFront = DEFAULT_POWER;//cw
-        double leftBack = DEFAULT_POWER;//ccw
-        double rightFront = DEFAULT_POWER;//ccw
-        double rightBack = DEFAULT_POWER;//cw
+        double leftFront = DEFAULT_POWER * leftFrontCorrector;//cw
+        double leftBack = DEFAULT_POWER * leftBackCorrector;//ccw
+        double rightFront = DEFAULT_POWER * rightFrontCorrector;//ccw
+        double rightBack = DEFAULT_POWER * rightBackCorrector;//cw
 
         void rotate(double left, double right) {
             double multiplier = getMultiplier(left, right);
