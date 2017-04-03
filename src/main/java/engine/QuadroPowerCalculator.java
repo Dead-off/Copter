@@ -17,7 +17,7 @@ public class QuadroPowerCalculator implements PowerCalculator {
     private final DirectionValidator directionValidator;
 
     public QuadroPowerCalculator() {
-        this(0.85, 1.05, 1.05, 0.85);
+        this(0.95, 1.05, 1.0, 0.95);
     }
 
     public QuadroPowerCalculator(double leftFrontCorrector, double leftBackCorrector, double rightFrontCorrector, double rightBackCorrector) {
