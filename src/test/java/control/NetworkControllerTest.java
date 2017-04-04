@@ -28,6 +28,11 @@ public class NetworkControllerTest {
             public void clientConnectionLost() {
 
             }
+
+            @Override
+            public void correct(CopterDirection.Direction.Correct correct) {
+
+            }
         });
         Thread serverThread = new Thread(controller::run);
         CopterDirection.Direction expected = CopterDirection.Direction.newBuilder()

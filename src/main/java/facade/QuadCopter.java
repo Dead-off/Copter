@@ -1,10 +1,10 @@
 package facade;
 
+import bootstrap.MainFactory;
 import engine.CopterController;
 import engine.PowerCalculator;
 import engine.QuadEnginePowerContainer;
 import engine.QuadroPowerCalculator;
-import bootstrap.MainFactory;
 import proto.CopterDirection;
 
 public class QuadCopter implements Copter {
@@ -21,6 +21,36 @@ public class QuadCopter implements Copter {
     public void handleDirectionChange(CopterDirection.Direction newDirection) {
         QuadEnginePowerContainer calculatePower = powerCalculator.calculateEnginesPower(newDirection);
         copterController.setEnginesPower(calculatePower);
+    }
+
+    @Override
+    public void correct(CopterDirection.Direction.Correct correct) {
+        switch (correct) {
+            case BACKWARD: {
+                powerCalculator.decrementForward();
+                break;
+            }
+            case FORWARD: {
+                powerCalculator.incrementForward();
+                break;
+            }
+            case LEFT: {
+                powerCalculator.incrementLeft();
+                break;
+            }
+            case RIGHT: {
+                powerCalculator.decrementLeft();
+                break;
+            }
+            case ROTATE_CCW: {
+                powerCalculator.incrementRotate();
+                break;
+            }
+            case ROTATE_CW: {
+                powerCalculator.decrementRotate();
+                break;
+            }
+        }
     }
 
     @Override

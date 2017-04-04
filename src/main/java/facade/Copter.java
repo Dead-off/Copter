@@ -8,4 +8,5 @@ public interface Copter {
 
     void clientConnectionLost();
 
+    void correct(CopterDirection.Direction.Correct correct);
 }

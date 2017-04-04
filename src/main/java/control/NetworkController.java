@@ -97,14 +97,22 @@ public class NetworkController implements UserController {
             }
             bytes.clear();
             CopterDirection.Direction proto = CopterDirection.Direction.parseFrom(bytesArr);
+            handleMessage(proto);
+            ServerCallback channelRead = NetworkController.this.onChannelRead;
+            if (channelRead != null) {
+                channelRead.handle();
+            }
+        }
+
+        private void handleMessage(CopterDirection.Direction proto) {
+            if (proto.getCorrect() != CopterDirection.Direction.Correct.NONE) {
+                copter.correct(proto.getCorrect());
+                return;
+            }
             try {
                 copter.handleDirectionChange(proto);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
-            }
-            ServerCallback channelRead = NetworkController.this.onChannelRead;
-            if (channelRead != null) {
-                channelRead.handle();
             }
         }
 

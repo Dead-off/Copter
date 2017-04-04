@@ -10,4 +10,16 @@ message Direction {
   double rotateLeft = 5;
   double rotateRight = 6;
   double power = 7;
+  
+  Correct correct = 8;
+  
+  enum Correct {
+    NONE = 0;
+	ROTATE_CW = 1;
+	ROTATE_CCW = 2;
+	LEFT = 3;
+	RIGHT = 4;
+	FORWARD = 5;
+	BACKWARD = 6;
+  }    
 }

@@ -28,6 +28,11 @@ public class CommandLineControllerTest {
             public void clientConnectionLost() {
 
             }
+
+            @Override
+            public void correct(CopterDirection.Direction.Correct correct) {
+
+            }
         });
         clController.run();
         CopterDirection.Direction actual = directionReference.get();

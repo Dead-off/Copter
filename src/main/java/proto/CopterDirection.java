@@ -19,39 +19,48 @@ public final class CopterDirection {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional double forward = 1;</code>
+     * <code>double forward = 1;</code>
      */
     double getForward();
 
     /**
-     * <code>optional double backward = 2;</code>
+     * <code>double backward = 2;</code>
      */
     double getBackward();
 
     /**
-     * <code>optional double left = 3;</code>
+     * <code>double left = 3;</code>
      */
     double getLeft();
 
     /**
-     * <code>optional double right = 4;</code>
+     * <code>double right = 4;</code>
      */
     double getRight();
 
     /**
-     * <code>optional double rotateLeft = 5;</code>
+     * <code>double rotateLeft = 5;</code>
      */
     double getRotateLeft();
 
     /**
-     * <code>optional double rotateRight = 6;</code>
+     * <code>double rotateRight = 6;</code>
      */
     double getRotateRight();
 
     /**
-     * <code>optional double power = 7;</code>
+     * <code>double power = 7;</code>
      */
     double getPower();
+
+    /**
+     * <code>.Direction.Correct correct = 8;</code>
+     */
+    int getCorrectValue();
+    /**
+     * <code>.Direction.Correct correct = 8;</code>
+     */
+    Direction.Correct getCorrect();
   }
   /**
    * Protobuf type {@code Direction}
@@ -72,9 +81,10 @@ public final class CopterDirection {
       rotateLeft_ = 0D;
       rotateRight_ = 0D;
       power_ = 0D;
+      correct_ = 0;
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
@@ -134,6 +144,12 @@ public final class CopterDirection {
               power_ = input.readDouble();
               break;
             }
+            case 64: {
+              int rawValue = input.readEnum();
+
+              correct_ = rawValue;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -147,20 +163,163 @@ public final class CopterDirection {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return proto.CopterDirection.internal_static_Direction_descriptor;
+      return CopterDirection.internal_static_Direction_descriptor;
     }
 
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return proto.CopterDirection.internal_static_Direction_fieldAccessorTable
+      return CopterDirection.internal_static_Direction_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              proto.CopterDirection.Direction.class, proto.CopterDirection.Direction.Builder.class);
+              Direction.class, Builder.class);
+    }
+
+    /**
+     * Protobuf enum {@code Direction.Correct}
+     */
+    public enum Correct
+        implements com.google.protobuf.ProtocolMessageEnum {
+      /**
+       * <code>NONE = 0;</code>
+       */
+      NONE(0),
+      /**
+       * <code>ROTATE_CW = 1;</code>
+       */
+      ROTATE_CW(1),
+      /**
+       * <code>ROTATE_CCW = 2;</code>
+       */
+      ROTATE_CCW(2),
+      /**
+       * <code>LEFT = 3;</code>
+       */
+      LEFT(3),
+      /**
+       * <code>RIGHT = 4;</code>
+       */
+      RIGHT(4),
+      /**
+       * <code>FORWARD = 5;</code>
+       */
+      FORWARD(5),
+      /**
+       * <code>BACKWARD = 6;</code>
+       */
+      BACKWARD(6),
+      UNRECOGNIZED(-1),
+      ;
+
+      /**
+       * <code>NONE = 0;</code>
+       */
+      public static final int NONE_VALUE = 0;
+      /**
+       * <code>ROTATE_CW = 1;</code>
+       */
+      public static final int ROTATE_CW_VALUE = 1;
+      /**
+       * <code>ROTATE_CCW = 2;</code>
+       */
+      public static final int ROTATE_CCW_VALUE = 2;
+      /**
+       * <code>LEFT = 3;</code>
+       */
+      public static final int LEFT_VALUE = 3;
+      /**
+       * <code>RIGHT = 4;</code>
+       */
+      public static final int RIGHT_VALUE = 4;
+      /**
+       * <code>FORWARD = 5;</code>
+       */
+      public static final int FORWARD_VALUE = 5;
+      /**
+       * <code>BACKWARD = 6;</code>
+       */
+      public static final int BACKWARD_VALUE = 6;
+
+
+      public final int getNumber() {
+        if (this == UNRECOGNIZED) {
+          throw new IllegalArgumentException(
+              "Can't get the number of an unknown enum value.");
+        }
+        return value;
+      }
+
+      /**
+       * @deprecated Use {@link #forNumber(int)} instead.
+       */
+      @Deprecated
+      public static Correct valueOf(int value) {
+        return forNumber(value);
+      }
+
+      public static Correct forNumber(int value) {
+        switch (value) {
+          case 0: return NONE;
+          case 1: return ROTATE_CW;
+          case 2: return ROTATE_CCW;
+          case 3: return LEFT;
+          case 4: return RIGHT;
+          case 5: return FORWARD;
+          case 6: return BACKWARD;
+          default: return null;
+        }
+      }
+
+      public static com.google.protobuf.Internal.EnumLiteMap<Correct>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static final com.google.protobuf.Internal.EnumLiteMap<
+          Correct> internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<Correct>() {
+              public Correct findValueByNumber(int number) {
+                return Correct.forNumber(number);
+              }
+            };
+
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(ordinal());
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return Direction.getDescriptor().getEnumTypes().get(0);
+      }
+
+      private static final Correct[] VALUES = values();
+
+      public static Correct valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        if (desc.getIndex() == -1) {
+          return UNRECOGNIZED;
+        }
+        return VALUES[desc.getIndex()];
+      }
+
+      private final int value;
+
+      private Correct(int value) {
+        this.value = value;
+      }
+
+      // @@protoc_insertion_point(enum_scope:Direction.Correct)
     }
 
     public static final int FORWARD_FIELD_NUMBER = 1;
     private double forward_;
     /**
-     * <code>optional double forward = 1;</code>
+     * <code>double forward = 1;</code>
      */
     public double getForward() {
       return forward_;
@@ -169,7 +328,7 @@ public final class CopterDirection {
     public static final int BACKWARD_FIELD_NUMBER = 2;
     private double backward_;
     /**
-     * <code>optional double backward = 2;</code>
+     * <code>double backward = 2;</code>
      */
     public double getBackward() {
       return backward_;
@@ -178,7 +337,7 @@ public final class CopterDirection {
     public static final int LEFT_FIELD_NUMBER = 3;
     private double left_;
     /**
-     * <code>optional double left = 3;</code>
+     * <code>double left = 3;</code>
      */
     public double getLeft() {
       return left_;
@@ -187,7 +346,7 @@ public final class CopterDirection {
     public static final int RIGHT_FIELD_NUMBER = 4;
     private double right_;
     /**
-     * <code>optional double right = 4;</code>
+     * <code>double right = 4;</code>
      */
     public double getRight() {
       return right_;
@@ -196,7 +355,7 @@ public final class CopterDirection {
     public static final int ROTATELEFT_FIELD_NUMBER = 5;
     private double rotateLeft_;
     /**
-     * <code>optional double rotateLeft = 5;</code>
+     * <code>double rotateLeft = 5;</code>
      */
     public double getRotateLeft() {
       return rotateLeft_;
@@ -205,7 +364,7 @@ public final class CopterDirection {
     public static final int ROTATERIGHT_FIELD_NUMBER = 6;
     private double rotateRight_;
     /**
-     * <code>optional double rotateRight = 6;</code>
+     * <code>double rotateRight = 6;</code>
      */
     public double getRotateRight() {
       return rotateRight_;
@@ -214,10 +373,26 @@ public final class CopterDirection {
     public static final int POWER_FIELD_NUMBER = 7;
     private double power_;
     /**
-     * <code>optional double power = 7;</code>
+     * <code>double power = 7;</code>
      */
     public double getPower() {
       return power_;
+    }
+
+    public static final int CORRECT_FIELD_NUMBER = 8;
+    private int correct_;
+    /**
+     * <code>.Direction.Correct correct = 8;</code>
+     */
+    public int getCorrectValue() {
+      return correct_;
+    }
+    /**
+     * <code>.Direction.Correct correct = 8;</code>
+     */
+    public Correct getCorrect() {
+      Correct result = Correct.valueOf(correct_);
+      return result == null ? Correct.UNRECOGNIZED : result;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -252,6 +427,9 @@ public final class CopterDirection {
       }
       if (power_ != 0D) {
         output.writeDouble(7, power_);
+      }
+      if (correct_ != Correct.NONE.getNumber()) {
+        output.writeEnum(8, correct_);
       }
     }
 
@@ -288,138 +466,145 @@ public final class CopterDirection {
         size += com.google.protobuf.CodedOutputStream
           .computeDoubleSize(7, power_);
       }
+      if (correct_ != Correct.NONE.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(8, correct_);
+      }
       memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof proto.CopterDirection.Direction)) {
+      if (!(obj instanceof Direction)) {
         return super.equals(obj);
       }
-      proto.CopterDirection.Direction other = (proto.CopterDirection.Direction) obj;
+      Direction other = (Direction) obj;
 
       boolean result = true;
       result = result && (
-          java.lang.Double.doubleToLongBits(getForward())
-          == java.lang.Double.doubleToLongBits(
+          Double.doubleToLongBits(getForward())
+          == Double.doubleToLongBits(
               other.getForward()));
       result = result && (
-          java.lang.Double.doubleToLongBits(getBackward())
-          == java.lang.Double.doubleToLongBits(
+          Double.doubleToLongBits(getBackward())
+          == Double.doubleToLongBits(
               other.getBackward()));
       result = result && (
-          java.lang.Double.doubleToLongBits(getLeft())
-          == java.lang.Double.doubleToLongBits(
+          Double.doubleToLongBits(getLeft())
+          == Double.doubleToLongBits(
               other.getLeft()));
       result = result && (
-          java.lang.Double.doubleToLongBits(getRight())
-          == java.lang.Double.doubleToLongBits(
+          Double.doubleToLongBits(getRight())
+          == Double.doubleToLongBits(
               other.getRight()));
       result = result && (
-          java.lang.Double.doubleToLongBits(getRotateLeft())
-          == java.lang.Double.doubleToLongBits(
+          Double.doubleToLongBits(getRotateLeft())
+          == Double.doubleToLongBits(
               other.getRotateLeft()));
       result = result && (
-          java.lang.Double.doubleToLongBits(getRotateRight())
-          == java.lang.Double.doubleToLongBits(
+          Double.doubleToLongBits(getRotateRight())
+          == Double.doubleToLongBits(
               other.getRotateRight()));
       result = result && (
-          java.lang.Double.doubleToLongBits(getPower())
-          == java.lang.Double.doubleToLongBits(
+          Double.doubleToLongBits(getPower())
+          == Double.doubleToLongBits(
               other.getPower()));
+      result = result && correct_ == other.correct_;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + FORWARD_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          java.lang.Double.doubleToLongBits(getForward()));
+          Double.doubleToLongBits(getForward()));
       hash = (37 * hash) + BACKWARD_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          java.lang.Double.doubleToLongBits(getBackward()));
+          Double.doubleToLongBits(getBackward()));
       hash = (37 * hash) + LEFT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          java.lang.Double.doubleToLongBits(getLeft()));
+          Double.doubleToLongBits(getLeft()));
       hash = (37 * hash) + RIGHT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          java.lang.Double.doubleToLongBits(getRight()));
+          Double.doubleToLongBits(getRight()));
       hash = (37 * hash) + ROTATELEFT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          java.lang.Double.doubleToLongBits(getRotateLeft()));
+          Double.doubleToLongBits(getRotateLeft()));
       hash = (37 * hash) + ROTATERIGHT_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          java.lang.Double.doubleToLongBits(getRotateRight()));
+          Double.doubleToLongBits(getRotateRight()));
       hash = (37 * hash) + POWER_FIELD_NUMBER;
       hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          java.lang.Double.doubleToLongBits(getPower()));
+          Double.doubleToLongBits(getPower()));
+      hash = (37 * hash) + CORRECT_FIELD_NUMBER;
+      hash = (53 * hash) + correct_;
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static proto.CopterDirection.Direction parseFrom(
+    public static Direction parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.CopterDirection.Direction parseFrom(
+    public static Direction parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.CopterDirection.Direction parseFrom(byte[] data)
+    public static Direction parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static proto.CopterDirection.Direction parseFrom(
+    public static Direction parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static proto.CopterDirection.Direction parseFrom(java.io.InputStream input)
+    public static Direction parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.CopterDirection.Direction parseFrom(
+    public static Direction parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.CopterDirection.Direction parseDelimitedFrom(java.io.InputStream input)
+    public static Direction parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static proto.CopterDirection.Direction parseDelimitedFrom(
+    public static Direction parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static proto.CopterDirection.Direction parseFrom(
+    public static Direction parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static proto.CopterDirection.Direction parseFrom(
+    public static Direction parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -431,7 +616,7 @@ public final class CopterDirection {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(proto.CopterDirection.Direction prototype) {
+    public static Builder newBuilder(Direction prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -439,9 +624,9 @@ public final class CopterDirection {
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -451,17 +636,17 @@ public final class CopterDirection {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:Direction)
-        proto.CopterDirection.DirectionOrBuilder {
+        DirectionOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return proto.CopterDirection.internal_static_Direction_descriptor;
+        return CopterDirection.internal_static_Direction_descriptor;
       }
 
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return proto.CopterDirection.internal_static_Direction_fieldAccessorTable
+        return CopterDirection.internal_static_Direction_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                proto.CopterDirection.Direction.class, proto.CopterDirection.Direction.Builder.class);
+                Direction.class, Builder.class);
       }
 
       // Construct using proto.CopterDirection.Direction.newBuilder()
@@ -470,7 +655,7 @@ public final class CopterDirection {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -495,28 +680,30 @@ public final class CopterDirection {
 
         power_ = 0D;
 
+        correct_ = 0;
+
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return proto.CopterDirection.internal_static_Direction_descriptor;
+        return CopterDirection.internal_static_Direction_descriptor;
       }
 
-      public proto.CopterDirection.Direction getDefaultInstanceForType() {
-        return proto.CopterDirection.Direction.getDefaultInstance();
+      public Direction getDefaultInstanceForType() {
+        return Direction.getDefaultInstance();
       }
 
-      public proto.CopterDirection.Direction build() {
-        proto.CopterDirection.Direction result = buildPartial();
+      public Direction build() {
+        Direction result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public proto.CopterDirection.Direction buildPartial() {
-        proto.CopterDirection.Direction result = new proto.CopterDirection.Direction(this);
+      public Direction buildPartial() {
+        Direction result = new Direction(this);
         result.forward_ = forward_;
         result.backward_ = backward_;
         result.left_ = left_;
@@ -524,6 +711,7 @@ public final class CopterDirection {
         result.rotateLeft_ = rotateLeft_;
         result.rotateRight_ = rotateRight_;
         result.power_ = power_;
+        result.correct_ = correct_;
         onBuilt();
         return result;
       }
@@ -555,16 +743,16 @@ public final class CopterDirection {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof proto.CopterDirection.Direction) {
-          return mergeFrom((proto.CopterDirection.Direction)other);
+        if (other instanceof Direction) {
+          return mergeFrom((Direction)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(proto.CopterDirection.Direction other) {
-        if (other == proto.CopterDirection.Direction.getDefaultInstance()) return this;
+      public Builder mergeFrom(Direction other) {
+        if (other == Direction.getDefaultInstance()) return this;
         if (other.getForward() != 0D) {
           setForward(other.getForward());
         }
@@ -586,6 +774,9 @@ public final class CopterDirection {
         if (other.getPower() != 0D) {
           setPower(other.getPower());
         }
+        if (other.correct_ != 0) {
+          setCorrectValue(other.getCorrectValue());
+        }
         onChanged();
         return this;
       }
@@ -598,11 +789,11 @@ public final class CopterDirection {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        proto.CopterDirection.Direction parsedMessage = null;
+        Direction parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (proto.CopterDirection.Direction) e.getUnfinishedMessage();
+          parsedMessage = (Direction) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -614,13 +805,13 @@ public final class CopterDirection {
 
       private double forward_ ;
       /**
-       * <code>optional double forward = 1;</code>
+       * <code>double forward = 1;</code>
        */
       public double getForward() {
         return forward_;
       }
       /**
-       * <code>optional double forward = 1;</code>
+       * <code>double forward = 1;</code>
        */
       public Builder setForward(double value) {
         
@@ -629,7 +820,7 @@ public final class CopterDirection {
         return this;
       }
       /**
-       * <code>optional double forward = 1;</code>
+       * <code>double forward = 1;</code>
        */
       public Builder clearForward() {
         
@@ -640,13 +831,13 @@ public final class CopterDirection {
 
       private double backward_ ;
       /**
-       * <code>optional double backward = 2;</code>
+       * <code>double backward = 2;</code>
        */
       public double getBackward() {
         return backward_;
       }
       /**
-       * <code>optional double backward = 2;</code>
+       * <code>double backward = 2;</code>
        */
       public Builder setBackward(double value) {
         
@@ -655,7 +846,7 @@ public final class CopterDirection {
         return this;
       }
       /**
-       * <code>optional double backward = 2;</code>
+       * <code>double backward = 2;</code>
        */
       public Builder clearBackward() {
         
@@ -666,13 +857,13 @@ public final class CopterDirection {
 
       private double left_ ;
       /**
-       * <code>optional double left = 3;</code>
+       * <code>double left = 3;</code>
        */
       public double getLeft() {
         return left_;
       }
       /**
-       * <code>optional double left = 3;</code>
+       * <code>double left = 3;</code>
        */
       public Builder setLeft(double value) {
         
@@ -681,7 +872,7 @@ public final class CopterDirection {
         return this;
       }
       /**
-       * <code>optional double left = 3;</code>
+       * <code>double left = 3;</code>
        */
       public Builder clearLeft() {
         
@@ -692,13 +883,13 @@ public final class CopterDirection {
 
       private double right_ ;
       /**
-       * <code>optional double right = 4;</code>
+       * <code>double right = 4;</code>
        */
       public double getRight() {
         return right_;
       }
       /**
-       * <code>optional double right = 4;</code>
+       * <code>double right = 4;</code>
        */
       public Builder setRight(double value) {
         
@@ -707,7 +898,7 @@ public final class CopterDirection {
         return this;
       }
       /**
-       * <code>optional double right = 4;</code>
+       * <code>double right = 4;</code>
        */
       public Builder clearRight() {
         
@@ -718,13 +909,13 @@ public final class CopterDirection {
 
       private double rotateLeft_ ;
       /**
-       * <code>optional double rotateLeft = 5;</code>
+       * <code>double rotateLeft = 5;</code>
        */
       public double getRotateLeft() {
         return rotateLeft_;
       }
       /**
-       * <code>optional double rotateLeft = 5;</code>
+       * <code>double rotateLeft = 5;</code>
        */
       public Builder setRotateLeft(double value) {
         
@@ -733,7 +924,7 @@ public final class CopterDirection {
         return this;
       }
       /**
-       * <code>optional double rotateLeft = 5;</code>
+       * <code>double rotateLeft = 5;</code>
        */
       public Builder clearRotateLeft() {
         
@@ -744,13 +935,13 @@ public final class CopterDirection {
 
       private double rotateRight_ ;
       /**
-       * <code>optional double rotateRight = 6;</code>
+       * <code>double rotateRight = 6;</code>
        */
       public double getRotateRight() {
         return rotateRight_;
       }
       /**
-       * <code>optional double rotateRight = 6;</code>
+       * <code>double rotateRight = 6;</code>
        */
       public Builder setRotateRight(double value) {
         
@@ -759,7 +950,7 @@ public final class CopterDirection {
         return this;
       }
       /**
-       * <code>optional double rotateRight = 6;</code>
+       * <code>double rotateRight = 6;</code>
        */
       public Builder clearRotateRight() {
         
@@ -770,13 +961,13 @@ public final class CopterDirection {
 
       private double power_ ;
       /**
-       * <code>optional double power = 7;</code>
+       * <code>double power = 7;</code>
        */
       public double getPower() {
         return power_;
       }
       /**
-       * <code>optional double power = 7;</code>
+       * <code>double power = 7;</code>
        */
       public Builder setPower(double value) {
         
@@ -785,11 +976,55 @@ public final class CopterDirection {
         return this;
       }
       /**
-       * <code>optional double power = 7;</code>
+       * <code>double power = 7;</code>
        */
       public Builder clearPower() {
         
         power_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private int correct_ = 0;
+      /**
+       * <code>.Direction.Correct correct = 8;</code>
+       */
+      public int getCorrectValue() {
+        return correct_;
+      }
+      /**
+       * <code>.Direction.Correct correct = 8;</code>
+       */
+      public Builder setCorrectValue(int value) {
+        correct_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.Direction.Correct correct = 8;</code>
+       */
+      public Correct getCorrect() {
+        Correct result = Correct.valueOf(correct_);
+        return result == null ? Correct.UNRECOGNIZED : result;
+      }
+      /**
+       * <code>.Direction.Correct correct = 8;</code>
+       */
+      public Builder setCorrect(Correct value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        correct_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.Direction.Correct correct = 8;</code>
+       */
+      public Builder clearCorrect() {
+        
+        correct_ = 0;
         onChanged();
         return this;
       }
@@ -808,12 +1043,12 @@ public final class CopterDirection {
     }
 
     // @@protoc_insertion_point(class_scope:Direction)
-    private static final proto.CopterDirection.Direction DEFAULT_INSTANCE;
+    private static final Direction DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new proto.CopterDirection.Direction();
+      DEFAULT_INSTANCE = new Direction();
     }
 
-    public static proto.CopterDirection.Direction getDefaultInstance() {
+    public static Direction getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -831,12 +1066,12 @@ public final class CopterDirection {
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<Direction> getParserForType() {
       return PARSER;
     }
 
-    public proto.CopterDirection.Direction getDefaultInstanceForType() {
+    public Direction getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -855,12 +1090,16 @@ public final class CopterDirection {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
-      "\n\025CopterDirection.proto\"\203\001\n\tDirection\022\017\n" +
+    String[] descriptorData = {
+      "\n\025CopterDirection.proto\"\214\002\n\tDirection\022\017\n" +
       "\007forward\030\001 \001(\001\022\020\n\010backward\030\002 \001(\001\022\014\n\004left" +
       "\030\003 \001(\001\022\r\n\005right\030\004 \001(\001\022\022\n\nrotateLeft\030\005 \001(" +
-      "\001\022\023\n\013rotateRight\030\006 \001(\001\022\r\n\005power\030\007 \001(\001B\030\n" +
-      "\005protoB\017CopterDirectionb\006proto3"
+      "\001\022\023\n\013rotateRight\030\006 \001(\001\022\r\n\005power\030\007 \001(\001\022#\n" +
+      "\007correct\030\010 \001(\0162\022.Direction.Correct\"b\n\007Co" +
+      "rrect\022\010\n\004NONE\020\000\022\r\n\tROTATE_CW\020\001\022\016\n\nROTATE" +
+      "_CCW\020\002\022\010\n\004LEFT\020\003\022\t\n\005RIGHT\020\004\022\013\n\007FORWARD\020\005" +
+      "\022\014\n\010BACKWARD\020\006B\030\n\005protoB\017CopterDirection" +
+      "b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -879,7 +1118,7 @@ public final class CopterDirection {
     internal_static_Direction_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Direction_descriptor,
-        new java.lang.String[] { "Forward", "Backward", "Left", "Right", "RotateLeft", "RotateRight", "Power", });
+        new String[] { "Forward", "Backward", "Left", "Right", "RotateLeft", "RotateRight", "Power", "Correct", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
