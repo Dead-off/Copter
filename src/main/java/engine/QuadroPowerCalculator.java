@@ -7,8 +7,8 @@ import util.DirectionValidatorImpl;
 public class QuadroPowerCalculator implements PowerCalculator {
 
     static final double DEFAULT_POWER = 0.7;
-    static final double MAX_MULTIPLIER = 0.05;
-    static final double CORRECTOR_DELTA = 0.005;
+    static final double MAX_MULTIPLIER = 0.15;
+    static final double CORRECTOR_DELTA = 0.0025;
     static final double MAX_CORRECT_VALUE = 0.1;
 
     //values from [-MAX_CORRECT_VALUE, MAX_CORRECT_VALUE].
