@@ -12,7 +12,7 @@ public class PowerCalculatorTest extends Assert {
 
     @Test
     public void calculatePowerEngineTest() {
-        PowerCalculator calculator = new QuadroPowerCalculator(1, 1, 1, 1);
+        PowerCalculator calculator = new QuadroPowerCalculator();
 
         CopterDirection.Direction.Builder directionBuilder = CopterDirection.Direction.newBuilder();
         directionBuilder.setPower(0);
@@ -49,6 +49,8 @@ public class PowerCalculatorTest extends Assert {
                 , DEFAULT_POWER * 0.9 * (1 + MULTIPLIER));
         assertTrue(expected.equalsWithEps(actual, EPS));
     }
+
+    // TODO: 04.04.2017 add test with correct values
 
     @Test(expected = IllegalArgumentException.class)
     public void calculatePowerEngineTestIllegalDirection() {
