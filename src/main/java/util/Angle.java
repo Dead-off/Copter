@@ -2,7 +2,7 @@ package util;
 
 public class Angle {
 
-    private double degrees;
+    private final double degrees;
 
     public Angle(double degrees) {
         this.degrees = degrees;
