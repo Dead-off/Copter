@@ -5,7 +5,9 @@ import engine.CopterController;
 import engine.PowerCalculator;
 import engine.QuadEnginePowerContainer;
 import engine.QuadroPowerCalculator;
+import position.Rotation;
 import proto.CopterDirection;
+import util.Observer;
 
 public class QuadCopter implements Copter {
 
@@ -15,6 +17,10 @@ public class QuadCopter implements Copter {
     public QuadCopter() {
         this.copterController = MainFactory.INSTANCE.getEnginesControlFactory().getCopterController();
         this.powerCalculator = new QuadroPowerCalculator();
+    }
+
+    private void receivedGyroscopeData(Rotation data) {
+
     }
 
     @Override
@@ -56,5 +62,13 @@ public class QuadCopter implements Copter {
     @Override
     public void clientConnectionLost() {
         copterController.close();
+    }
+
+    private class GyroscopeObserver implements Observer<Rotation> {
+
+        @Override
+        public void notify(Rotation arg) {
+            receivedGyroscopeData(arg);
+        }
     }
 }

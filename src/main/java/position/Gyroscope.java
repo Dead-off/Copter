@@ -1,7 +1,7 @@
 package position;
 
-public interface Gyroscope {
+import util.Observable;
 
-    Rotation getCurrentRotation();
+public interface Gyroscope extends Observable<Rotation> {
 
 }
