@@ -2,6 +2,7 @@ package bootstrap;
 
 import control.CommandLineController;
 import facade.CopterModulesFactory;
+import facade.PrintControllerFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -10,8 +11,7 @@ public class MainFactoryTest {
 
     @Test
     public void setEnginesTest() {
-        CopterModulesFactory actual = () -> null;
-        MainFactory.INSTANCE.setCopterModulesFactory(actual);
+        MainFactory.INSTANCE.setCopterModulesFactory(new PrintControllerFactory());
         MainFactory.INSTANCE.setUserController(new CommandLineController());
         assertTrue(MainFactory.INSTANCE.isConfigured());
     }

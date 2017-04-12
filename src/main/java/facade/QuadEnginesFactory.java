@@ -2,11 +2,14 @@ package facade;
 
 import engine.CopterController;
 import engine.GPIOQuadCopterController;
-import facade.CopterModulesFactory;
+import sensors.Gyroscope;
+import sensors.RealGyroscope;
 
 public class QuadEnginesFactory implements CopterModulesFactory {
 
-    public QuadEnginesFactory() {
+    @Override
+    public Gyroscope getGyroscope() {
+        return RealGyroscope.INSTANCE;
     }
 
     @Override
