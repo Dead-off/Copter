@@ -11,11 +11,16 @@ import proto.CopterDirection;
 import sensors.SensorThread;
 import util.Observer;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 public class QuadCopter implements Copter {
 
     private final CopterController copterController;
     private final PowerCalculator powerCalculator;
     private final Gyroscope gyroscope;
+
+    private final AtomicReference<RotationAngles> lastGyroscopeData = new AtomicReference<>();
+    private final AtomicReference<RotationAngles> lastClientOffset = new AtomicReference<>();
 
     public QuadCopter() {
         this.copterController = MainFactory.INSTANCE.getCopterModulesFactory().getCopterController();
@@ -31,13 +36,18 @@ public class QuadCopter implements Copter {
     }
 
     private void receivedGyroscopeData(RotationAngles data) {
-
+        lastGyroscopeData.set(data);
     }
 
     @Override
     public void handleDirectionChange(CopterDirection.Direction newDirection) {
+        //todo calculate client offset
         QuadEnginePowerContainer calculatePower = powerCalculator.calculateEnginesPower(newDirection);
         copterController.setEnginesPower(calculatePower);
+    }
+
+    private void calculateEnginesPowerAndSet() {
+        // TODO: 12.04.17 calculate engines power by angles
     }
 
     @Override
