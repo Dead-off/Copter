@@ -4,8 +4,8 @@ import control.CommandLineController;
 import control.NetworkController;
 import control.UserController;
 import facade.CopterModulesFactory;
-import engine.PrintControllerFactory;
-import engine.QuadEnginesFactory;
+import facade.PrintControllerFactory;
+import facade.QuadEnginesFactory;
 
 public class FactoryConfigurator {
 

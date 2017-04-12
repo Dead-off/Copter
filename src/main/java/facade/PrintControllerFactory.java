@@ -1,5 +1,7 @@
-package engine;
+package facade;
 
+import engine.CopterController;
+import engine.PrintCopterController;
 import facade.CopterModulesFactory;
 
 public class PrintControllerFactory implements CopterModulesFactory {
