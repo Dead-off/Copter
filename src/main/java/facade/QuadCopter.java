@@ -15,7 +15,7 @@ public class QuadCopter implements Copter {
     private final PowerCalculator powerCalculator;
 
     public QuadCopter() {
-        this.copterController = MainFactory.INSTANCE.getEnginesControlFactory().getCopterController();
+        this.copterController = MainFactory.INSTANCE.getCopterModulesFactory().getCopterController();
         this.powerCalculator = new QuadroPowerCalculator();
     }
 

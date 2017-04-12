@@ -1,6 +1,8 @@
 package engine;
 
-public class QuadEnginesFactory implements EnginesControlFactory {
+import facade.CopterModulesFactory;
+
+public class QuadEnginesFactory implements CopterModulesFactory {
 
     public QuadEnginesFactory() {
     }

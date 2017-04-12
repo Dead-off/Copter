@@ -1,7 +1,7 @@
 package bootstrap;
 
 import control.CommandLineController;
-import engine.EnginesControlFactory;
+import facade.CopterModulesFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -10,16 +10,16 @@ public class MainFactoryTest {
 
     @Test
     public void setEnginesTest() {
-        EnginesControlFactory actual = () -> null;
-        MainFactory.INSTANCE.setEnginesControlFactory(actual);
+        CopterModulesFactory actual = () -> null;
+        MainFactory.INSTANCE.setCopterModulesFactory(actual);
         MainFactory.INSTANCE.setUserController(new CommandLineController());
         assertTrue(MainFactory.INSTANCE.isConfigured());
     }
 
     @Test(expected = RuntimeException.class)
     public void getNonConfiguredTest() {
-        MainFactory.INSTANCE.setEnginesControlFactory(null);
-        MainFactory.INSTANCE.getEnginesControlFactory();
+        MainFactory.INSTANCE.setCopterModulesFactory(null);
+        MainFactory.INSTANCE.getCopterModulesFactory();
     }
 
 }

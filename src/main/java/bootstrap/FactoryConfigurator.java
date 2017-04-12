@@ -3,7 +3,7 @@ package bootstrap;
 import control.CommandLineController;
 import control.NetworkController;
 import control.UserController;
-import engine.EnginesControlFactory;
+import facade.CopterModulesFactory;
 import engine.PrintControllerFactory;
 import engine.QuadEnginesFactory;
 
@@ -18,19 +18,19 @@ public class FactoryConfigurator {
     }
 
     public void configure() {
-        EnginesControlFactory enginesControlFactory = parseEnginesFactory(arguments.outputController);
+        CopterModulesFactory copterModulesFactory = parseEnginesFactory(arguments.outputController);
         UserController userController = parseUserController(arguments.userController);
         if (userController == null) {
             throw new IllegalArgumentException("Illegal user controller argument!");
         }
-        if (enginesControlFactory == null) {
+        if (copterModulesFactory == null) {
             throw new IllegalArgumentException("Illegal user controller argument!");
         }
-        factory.setEnginesControlFactory(enginesControlFactory);
+        factory.setCopterModulesFactory(copterModulesFactory);
         factory.setUserController(userController);
     }
 
-    private EnginesControlFactory parseEnginesFactory(String type) {
+    private CopterModulesFactory parseEnginesFactory(String type) {
         switch (type) {
             case "GPIO": {
                 return new QuadEnginesFactory();
