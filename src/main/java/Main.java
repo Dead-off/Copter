@@ -2,6 +2,7 @@ import bootstrap.Arguments;
 import bootstrap.ArgumentsParser;
 import com.martiansoftware.jsap.JSAPException;
 import control.UserController;
+import facade.Copter;
 import facade.QuadCopter;
 import bootstrap.FactoryConfigurator;
 import bootstrap.MainFactory;
@@ -27,7 +28,9 @@ public class Main {
             return;
         }
         UserController userController = MainFactory.INSTANCE.getUserController();
-        userController.setCopter(new QuadCopter());
+        Copter copter = new QuadCopter();
+        copter.init();
+        userController.setCopter(copter);
         userController.run();
 
 
