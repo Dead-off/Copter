@@ -19,6 +19,12 @@ public class CommandLineControllerTest {
         CommandLineController clController = new CommandLineController(is);
         final AtomicReference<CopterDirection.Direction> directionReference = new AtomicReference<>();
         clController.setCopter(new Copter() {
+
+            @Override
+            public void init() {
+
+            }
+
             @Override
             public void handleDirectionChange(CopterDirection.Direction newDirection) {
                 directionReference.set(newDirection);

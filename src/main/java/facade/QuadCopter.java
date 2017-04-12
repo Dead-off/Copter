@@ -5,18 +5,29 @@ import engine.CopterController;
 import engine.PowerCalculator;
 import engine.QuadEnginePowerContainer;
 import engine.QuadroPowerCalculator;
+import sensors.Gyroscope;
 import sensors.RotationAngles;
 import proto.CopterDirection;
+import sensors.SensorThread;
 import util.Observer;
 
 public class QuadCopter implements Copter {
 
     private final CopterController copterController;
     private final PowerCalculator powerCalculator;
+    private final Gyroscope gyroscope;
 
     public QuadCopter() {
         this.copterController = MainFactory.INSTANCE.getCopterModulesFactory().getCopterController();
+        this.gyroscope = MainFactory.INSTANCE.getCopterModulesFactory().getGyroscope();
         this.powerCalculator = new QuadroPowerCalculator();
+    }
+
+    @Override
+    public void init() {
+        SensorThread<RotationAngles> gyroscopeThread = new SensorThread<>(this.gyroscope);
+        gyroscopeThread.addObserver(new GyroscopeObserver());
+        gyroscopeThread.startReading();
     }
 
     private void receivedGyroscopeData(RotationAngles data) {

@@ -19,6 +19,12 @@ public class NetworkControllerTest {
         NetworkController controller = new NetworkController(15127);
         final AtomicReference<CopterDirection.Direction> directionReference = new AtomicReference<>();
         controller.setCopter(new Copter() {
+
+            @Override
+            public void init() {
+
+            }
+
             @Override
             public void handleDirectionChange(CopterDirection.Direction newDirection) {
                 directionReference.set(newDirection);
