@@ -2,7 +2,7 @@ package facade;
 
 import bootstrap.MainFactory;
 import engine.CopterController;
-import engine.PowerCalculator;
+import util.PowerCalculator;
 import util.QuadEnginePowerContainer;
 import util.QuadPowerCalculator;
 import sensors.Gyroscope;

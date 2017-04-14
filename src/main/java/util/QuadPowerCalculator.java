@@ -1,6 +1,5 @@
 package util;
 
-import engine.PowerCalculator;
 import proto.CopterDirection;
 
 public class QuadPowerCalculator implements PowerCalculator {

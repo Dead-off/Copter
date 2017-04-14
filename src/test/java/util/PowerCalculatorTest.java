@@ -1,11 +1,8 @@
 package util;
 
-import engine.PowerCalculator;
 import org.junit.Assert;
 import org.junit.Test;
 import proto.CopterDirection;
-import util.QuadEnginePowerContainer;
-import util.QuadPowerCalculator;
 
 public class PowerCalculatorTest extends Assert {
 
