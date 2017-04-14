@@ -16,7 +16,7 @@ public class QuadCopter implements Copter {
     private final Gyroscope gyroscope;
     private final OffsetCalculator offsetCalculator;
 
-    private final double AVERAGE_POWER = 0.35;
+    private final static double AVERAGE_POWER = 0.35;
 
     private final AtomicReference<RotationAngles> lastGyroscopeData = new AtomicReference<>();
     private final AtomicReference<RotationAngles> lastClientOffset = new AtomicReference<>();
