@@ -27,12 +27,12 @@ public class SensorThread<T> implements Observable<T> {
 
     @Override
     public void addObserver(Observer<T> observer) {
-
+        observers.add(observer);
     }
 
     @Override
     public void removeObserver(Observer<T> observer) {
-
+        observers.remove(observer);
     }
 
     @Override
