@@ -36,7 +36,7 @@ public class CommandLineControllerTest {
             }
 
             @Override
-            public void correct(CopterDirection.Direction.Correct correct) {
+            public void resetOffset() {
 
             }
         });

@@ -36,7 +36,7 @@ public class NetworkControllerTest {
             }
 
             @Override
-            public void correct(CopterDirection.Direction.Correct correct) {
+            public void resetOffset() {
 
             }
         });

@@ -106,7 +106,7 @@ public class NetworkController implements UserController {
 
         private void handleMessage(CopterDirection.Direction proto) {
             if (proto.getCorrect() != CopterDirection.Direction.Correct.NONE) {
-                copter.correct(proto.getCorrect());
+                copter.resetOffset();
                 return;
             }
             try {

@@ -2,6 +2,8 @@ package util;
 
 public class Angle {
 
+    private final static double DEGREES_360 = 360;
+
     private final double degrees;
 
     public Angle(double degrees) {
@@ -14,6 +16,21 @@ public class Angle {
 
     public Angle add(Angle other) {
         return new Angle(this.getDegrees() + other.getDegrees());
+    }
+
+    public Angle subtract(Angle other) {
+        return new Angle(this.getDegrees() - other.getDegrees());
+    }
+
+    public Angle getNormalized() {
+        double result = getDegrees();
+        while (result <= -180) {
+            result += DEGREES_360;
+        }
+        while (result > 180) {
+            result -= DEGREES_360;
+        }
+        return new Angle(result);
     }
 
     @Override

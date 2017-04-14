@@ -1,5 +1,7 @@
 package sensors;
 
+import util.RotationAngles;
+
 public class RealGyroscope implements Gyroscope {
 
     public final static Gyroscope INSTANCE = new RealGyroscope();

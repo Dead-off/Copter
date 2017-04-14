@@ -1,6 +1,7 @@
 package sensors;
 
 import util.Angle;
+import util.RotationAngles;
 
 import java.util.Random;
 

@@ -2,7 +2,6 @@ package util;
 
 import org.junit.Assert;
 import org.junit.Test;
-import proto.CopterDirection;
 
 public class PowerCalculatorTest extends Assert {
 
@@ -14,58 +13,43 @@ public class PowerCalculatorTest extends Assert {
     public void calculatePowerEngineTest() {
         PowerCalculator calculator = new QuadPowerCalculator();
 
-        CopterDirection.Direction.Builder directionBuilder = CopterDirection.Direction.newBuilder();
-        directionBuilder.setPower(0);
-        QuadEnginePowerContainer actual = calculator.calculateEnginesPower(directionBuilder.build());
+        RotationAngles angles = new RotationAngles(10, 10, 10);
+        QuadEnginePowerContainer actual = calculator.calculateEnginesPower(angles, 0);
         QuadEnginePowerContainer expected = new QuadEnginePowerContainer(0, 0, 0, 0);
         assertTrue(actual.equalsWithEps(expected, EPS));
 
-        directionBuilder = CopterDirection.Direction.newBuilder();
-        directionBuilder.setPower(1);
-        actual = calculator.calculateEnginesPower(directionBuilder.build());
+        angles = new RotationAngles(360, 360, -360);
+        actual = calculator.calculateEnginesPower(angles, 1);
         expected = new QuadEnginePowerContainer(DEFAULT_POWER, DEFAULT_POWER, DEFAULT_POWER, DEFAULT_POWER);
         assertTrue(actual.equalsWithEps(expected, EPS));
 
-        directionBuilder = CopterDirection.Direction.newBuilder();
-        directionBuilder.setPower(0.7);
-        directionBuilder.setRotateRight(0.6);
-        directionBuilder.setForward(0.5);
-        actual = calculator.calculateEnginesPower(directionBuilder.build());
+        actual = calculator.calculateEnginesPower(new RotationAngles(10, 0, 0), 0.8);
         expected = new QuadEnginePowerContainer(
-                DEFAULT_POWER * 0.7 / ((1 + MULTIPLIER * 0.5) * (1 + MULTIPLIER * 0.6))
-                , DEFAULT_POWER * (1 + MULTIPLIER * 0.5) * (1 + MULTIPLIER * 0.6) * 0.7
-                , DEFAULT_POWER * 0.7 * (1 + MULTIPLIER * 0.6) / (1 + MULTIPLIER * 0.5)
-                , DEFAULT_POWER * 0.7 * (1 + MULTIPLIER * 0.5) / (1 + MULTIPLIER * 0.6));
+                DEFAULT_POWER * 0.8 / (1 + MULTIPLIER * 10.0 / 180)
+                , DEFAULT_POWER * 0.8 * (1 + MULTIPLIER * 10.0 / 180)
+                , DEFAULT_POWER * 0.8 / (1 + MULTIPLIER * 10.0 / 180)
+                , DEFAULT_POWER * 0.8 * (1 + MULTIPLIER * 10.0 / 180));
+        assertTrue(actual.equalsWithEps(expected, EPS));
+
+        actual = calculator.calculateEnginesPower(new RotationAngles(10, 5, -20), 0.9);
+        double xCorrect = (1 + MULTIPLIER * 10.0 / 180);
+        double yCorrect = (1 + MULTIPLIER * 5.0 / 180);
+        double zCorrect = (1 + MULTIPLIER * 20.0 / 180);
+        expected = new QuadEnginePowerContainer(
+                DEFAULT_POWER * 0.9 * zCorrect / (xCorrect * yCorrect)
+                , DEFAULT_POWER * 0.9 * xCorrect / (zCorrect * yCorrect)
+                , DEFAULT_POWER * 0.9 * yCorrect / (zCorrect * xCorrect)
+                , DEFAULT_POWER * 0.9 * xCorrect * yCorrect * zCorrect);
         assertTrue(expected.equalsWithEps(actual, EPS));
 
-        directionBuilder = CopterDirection.Direction.newBuilder();
-        directionBuilder.setPower(0.9);
-        directionBuilder.setLeft(1.0);
-        actual = calculator.calculateEnginesPower(directionBuilder.build());
+
+        actual = calculator.calculateEnginesPower(new RotationAngles(-180, 0, 0), 0.8);
+        xCorrect = (1 + MULTIPLIER * 180 / 180);
         expected = new QuadEnginePowerContainer(
-                DEFAULT_POWER * 0.9 / (1 + MULTIPLIER)
-                , DEFAULT_POWER * 0.9 / (1 + MULTIPLIER)
-                , DEFAULT_POWER * 0.9 * (1 + MULTIPLIER)
-                , DEFAULT_POWER * 0.9 * (1 + MULTIPLIER));
+                DEFAULT_POWER * 0.8 / xCorrect
+                , DEFAULT_POWER * 0.8 * xCorrect
+                , DEFAULT_POWER * 0.8 / xCorrect
+                , DEFAULT_POWER * 0.8 * xCorrect);
         assertTrue(expected.equalsWithEps(actual, EPS));
-    }
-
-    // TODO: 04.04.2017 add test with correct values
-
-    @Test(expected = IllegalArgumentException.class)
-    public void calculatePowerEngineTestIllegalDirection() {
-        PowerCalculator calculator = new QuadPowerCalculator();
-        CopterDirection.Direction.Builder directionBuilder = CopterDirection.Direction.newBuilder();
-        directionBuilder.setLeft(0.3);
-        directionBuilder.setRight(0.3);
-        calculator.calculateEnginesPower(directionBuilder.build());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void calculatePowerEngineTestNANDirection() {
-        PowerCalculator calculator = new QuadPowerCalculator();
-        CopterDirection.Direction.Builder directionBuilder = CopterDirection.Direction.newBuilder();
-        directionBuilder.setLeft(Double.NaN);
-        calculator.calculateEnginesPower(directionBuilder.build());
     }
 }

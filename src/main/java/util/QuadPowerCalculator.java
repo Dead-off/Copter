@@ -1,86 +1,18 @@
 package util;
 
-import proto.CopterDirection;
-
 public class QuadPowerCalculator implements PowerCalculator {
 
     static final double DEFAULT_POWER = 0.7;
     static final double MAX_MULTIPLIER = 0.15;
-    static final double CORRECTOR_DELTA = 0.0025;
-    static final double MAX_CORRECT_VALUE = 0.1;
-
-    //values from [-MAX_CORRECT_VALUE, MAX_CORRECT_VALUE].
-    //positive value is rotate CCW, fly forward and left
-    private double rotateCorrector;
-    private double forwardBackCorrector;
-    private double leftRightCorrector;
-
-    private final DirectionValidator directionValidator;
-
-    public QuadPowerCalculator() {
-        this(0, 0, 0);
-    }
-
-    public QuadPowerCalculator(double rotateCorrector, double forwardBackCorrector, double leftRightCorrector) {
-        this.rotateCorrector = rotateCorrector;
-        this.forwardBackCorrector = forwardBackCorrector;
-        this.leftRightCorrector = leftRightCorrector;
-        this.directionValidator = new DirectionValidatorImpl();
-    }
 
     @Override
-    public QuadEnginePowerContainer calculateEnginesPower(CopterDirection.Direction direction) {
-        if (!directionValidator.isCorrectDirectionMessage(direction)) {
-            throw new IllegalArgumentException("direction values are incorrect!");
-        }
-        Builder helper = new Builder();
-        helper.correct();
-        helper.rotate(direction.getRotateLeft(), direction.getRotateRight());
-        helper.moveLeftRight(direction.getLeft(), direction.getRight());
-        helper.moveBackForward(direction.getBackward(), direction.getForward());
-        return helper.build(direction.getPower());
-    }
-
-    @Override
-    public void incrementRotate() {
-        if (Math.abs(this.rotateCorrector) < MAX_CORRECT_VALUE) {
-            this.rotateCorrector += CORRECTOR_DELTA;
-        }
-    }
-
-    @Override
-    public void decrementRotate() {
-        if (Math.abs(this.rotateCorrector) < MAX_CORRECT_VALUE) {
-            this.rotateCorrector -= CORRECTOR_DELTA;
-        }
-    }
-
-    @Override
-    public void incrementForward() {
-        if (Math.abs(this.forwardBackCorrector) < MAX_CORRECT_VALUE) {
-            this.forwardBackCorrector += CORRECTOR_DELTA;
-        }
-    }
-
-    @Override
-    public void decrementForward() {
-        if (Math.abs(this.forwardBackCorrector) < MAX_CORRECT_VALUE) {
-            this.forwardBackCorrector -= CORRECTOR_DELTA;
-        }
-    }
-
-    @Override
-    public void incrementLeft() {
-        if (Math.abs(this.leftRightCorrector) < MAX_CORRECT_VALUE) {
-            this.leftRightCorrector += CORRECTOR_DELTA;
-        }
-    }
-
-    @Override
-    public void decrementLeft() {
-        if (Math.abs(this.leftRightCorrector) < MAX_CORRECT_VALUE) {
-            this.leftRightCorrector -= CORRECTOR_DELTA;
-        }
+    public QuadEnginePowerContainer calculateEnginesPower(RotationAngles angles, double power) {
+        angles = angles.getNormalized();
+        Builder builder = new Builder();
+        builder.rotate(angles.getZ());
+        builder.moveLeftRight(angles.getY());
+        builder.moveBackForward(angles.getX());
+        return builder.build(power);
     }
 
     private class Builder {
@@ -90,13 +22,13 @@ public class QuadPowerCalculator implements PowerCalculator {
         double rightFront = DEFAULT_POWER;//ccw
         double rightBack = DEFAULT_POWER;//cw
 
-        void rotate(double left, double right) {
-            double multiplier = getMultiplier(left, right);
+        void rotate(Angle angle) {
+            double multiplier = getMultiplier(angle);
             if (multiplier == 0) {
                 return;
             }
-            boolean isRotateLeft = (left != 0);
-            if (isRotateLeft) {
+            boolean needRotateLeft = (angle.getDegrees() < 0);
+            if (needRotateLeft) {
                 rightFront /= multiplier;
                 leftBack /= multiplier;
                 leftFront *= multiplier;
@@ -109,24 +41,13 @@ public class QuadPowerCalculator implements PowerCalculator {
             }
         }
 
-        private void correct() {
-            this.leftBack += (forwardBackCorrector - leftRightCorrector - rotateCorrector);
-            this.leftFront += (-forwardBackCorrector - leftRightCorrector + rotateCorrector);
-            this.rightBack += (forwardBackCorrector + leftRightCorrector + rotateCorrector);
-            this.rightFront += (-forwardBackCorrector + leftRightCorrector - rotateCorrector);
-        }
-
-        private double getMultiplier(double directionFirst, double directionSecond) {
-            return 1 + MAX_MULTIPLIER * (directionFirst == 0 ? directionSecond : directionFirst);
-        }
-
-        void moveLeftRight(double left, double right) {
-            double multiplier = getMultiplier(left, right);
+        void moveLeftRight(Angle angle) {
+            double multiplier = getMultiplier(angle);
             if (multiplier == 0) {
                 return;
             }
-            boolean isMoveLeft = (left != 0);
-            if (isMoveLeft) {
+            boolean needLeft = (angle.getDegrees() > 0);
+            if (needLeft) {
                 rightFront *= multiplier;
                 leftBack /= multiplier;
                 leftFront /= multiplier;
@@ -139,13 +60,13 @@ public class QuadPowerCalculator implements PowerCalculator {
             }
         }
 
-        void moveBackForward(double back, double forward) {
-            double multiplier = getMultiplier(back, forward);
+        void moveBackForward(Angle angle) {
+            double multiplier = getMultiplier(angle);
             if (multiplier == 0) {
                 return;
             }
-            boolean isMoveForward = (forward != 0);
-            if (isMoveForward) {
+            boolean needForward = (angle.getDegrees() > 0);
+            if (needForward) {
                 rightFront /= multiplier;
                 leftBack *= multiplier;
                 leftFront /= multiplier;
@@ -156,14 +77,28 @@ public class QuadPowerCalculator implements PowerCalculator {
                 leftFront *= multiplier;
                 rightBack /= multiplier;
             }
+        }
+
+        private double getMultiplier(Angle angle) {
+            return 1+Math.abs(MAX_MULTIPLIER*angle.getDegrees() / 180);
+        }
+
+        private double getValueBetweenZeroAndOne(double value) {
+            if (value > 1) {
+                return 1.0;
+            } else if (value < 0) {
+                return 0.0;
+            }
+            return value;
         }
 
         QuadEnginePowerContainer build(double power) {
+
             return new QuadEnginePowerContainer(
-                    leftFront * power,
-                    leftBack * power,
-                    rightFront * power,
-                    rightBack * power);
+                    getValueBetweenZeroAndOne(leftFront * power),
+                    getValueBetweenZeroAndOne(leftBack * power),
+                    getValueBetweenZeroAndOne(rightFront * power),
+                    getValueBetweenZeroAndOne(rightBack * power));
         }
     }
 }
