@@ -57,7 +57,7 @@ public class ArgumentsParser {
                 .setRequired(true)
                 .setShortFlag('s')
                 .setLongFlag(JSAP.NO_LONGFLAG);
-        port.setHelp("type of sensor control factory. Values REAL or MOCK");
+        sensors.setHelp("type of sensor control factory. Values REAL or MOCK");
 
         result.registerParameter(copterControl);
         result.registerParameter(userControl);
