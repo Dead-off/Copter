@@ -1,6 +1,7 @@
 package engine;
 
-import java.io.Closeable;
+import util.QuadEnginePowerContainer;
+
 import java.io.IOException;
 import java.io.OutputStream;
 

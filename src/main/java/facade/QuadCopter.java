@@ -3,8 +3,8 @@ package facade;
 import bootstrap.MainFactory;
 import engine.CopterController;
 import engine.PowerCalculator;
-import engine.QuadEnginePowerContainer;
-import engine.QuadroPowerCalculator;
+import util.QuadEnginePowerContainer;
+import util.QuadPowerCalculator;
 import sensors.Gyroscope;
 import sensors.RotationAngles;
 import proto.CopterDirection;
@@ -25,7 +25,7 @@ public class QuadCopter implements Copter {
     public QuadCopter() {
         this.copterController = MainFactory.INSTANCE.getCopterModulesFactory().getCopterController();
         this.gyroscope = MainFactory.INSTANCE.getCopterModulesFactory().getGyroscope();
-        this.powerCalculator = new QuadroPowerCalculator();
+        this.powerCalculator = new QuadPowerCalculator();
     }
 
     @Override

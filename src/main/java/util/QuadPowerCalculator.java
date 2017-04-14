@@ -1,10 +1,9 @@
-package engine;
+package util;
 
+import engine.PowerCalculator;
 import proto.CopterDirection;
-import util.DirectionValidator;
-import util.DirectionValidatorImpl;
 
-public class QuadroPowerCalculator implements PowerCalculator {
+public class QuadPowerCalculator implements PowerCalculator {
 
     static final double DEFAULT_POWER = 0.7;
     static final double MAX_MULTIPLIER = 0.15;
@@ -19,11 +18,11 @@ public class QuadroPowerCalculator implements PowerCalculator {
 
     private final DirectionValidator directionValidator;
 
-    public QuadroPowerCalculator() {
+    public QuadPowerCalculator() {
         this(0, 0, 0);
     }
 
-    public QuadroPowerCalculator(double rotateCorrector, double forwardBackCorrector, double leftRightCorrector) {
+    public QuadPowerCalculator(double rotateCorrector, double forwardBackCorrector, double leftRightCorrector) {
         this.rotateCorrector = rotateCorrector;
         this.forwardBackCorrector = forwardBackCorrector;
         this.leftRightCorrector = leftRightCorrector;
@@ -35,12 +34,12 @@ public class QuadroPowerCalculator implements PowerCalculator {
         if (!directionValidator.isCorrectDirectionMessage(direction)) {
             throw new IllegalArgumentException("direction values are incorrect!");
         }
-        CalculatorHelper helper = new CalculatorHelper();
+        Builder helper = new Builder();
         helper.correct();
         helper.rotate(direction.getRotateLeft(), direction.getRotateRight());
         helper.moveLeftRight(direction.getLeft(), direction.getRight());
         helper.moveBackForward(direction.getBackward(), direction.getForward());
-        return helper.toContainer(direction.getPower());
+        return helper.build(direction.getPower());
     }
 
     @Override
@@ -85,7 +84,7 @@ public class QuadroPowerCalculator implements PowerCalculator {
         }
     }
 
-    private class CalculatorHelper {
+    private class Builder {
         //        cw - clock wise ccw - counter clock wise
         double leftFront = DEFAULT_POWER;//cw
         double leftBack = DEFAULT_POWER;//ccw
@@ -160,7 +159,7 @@ public class QuadroPowerCalculator implements PowerCalculator {
             }
         }
 
-        QuadEnginePowerContainer toContainer(double power) {
+        QuadEnginePowerContainer build(double power) {
             return new QuadEnginePowerContainer(
                     leftFront * power,
                     leftBack * power,

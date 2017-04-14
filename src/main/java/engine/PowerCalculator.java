@@ -1,6 +1,7 @@
 package engine;
 
 import proto.CopterDirection;
+import util.QuadEnginePowerContainer;
 
 public interface PowerCalculator {
 

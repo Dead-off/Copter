@@ -1,9 +1,9 @@
 package engine;
 
 import org.junit.Test;
+import util.QuadEnginePowerContainer;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;

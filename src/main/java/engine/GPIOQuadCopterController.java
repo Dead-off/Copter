@@ -2,6 +2,9 @@ package engine;
 
 import com.pi4j.io.gpio.*;
 import com.pi4j.wiringpi.Gpio;
+import util.QuadEnginePowerContainer;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.pi4j.wiringpi.Gpio.PWM_MODE_MS;
 
@@ -13,8 +16,6 @@ public class GPIOQuadCopterController implements CopterController {
     private final GpioController GPIO;
     private final GpioPinPwmOutput leftFrontPin;
     private final GpioPinPwmOutput rightFrontPin;
-    private final GpioPinDigitalOutput leftBackPinOrigin;
-    private final GpioPinDigitalOutput rightBackPinOrigin;
 
     private final SoftwarePWMEmulator leftBackPin;
     private final SoftwarePWMEmulator rightBackPin;
@@ -23,10 +24,8 @@ public class GPIOQuadCopterController implements CopterController {
         this.GPIO = GPIO;
         this.leftFrontPin = GPIO.provisionPwmOutputPin(RaspiPin.GPIO_26);
         this.rightFrontPin = GPIO.provisionPwmOutputPin(RaspiPin.GPIO_23);
-        this.rightBackPinOrigin = GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_15);
-        this.leftBackPinOrigin = GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_29);
-        this.leftBackPin = new SoftwarePWMEmulator(this.leftBackPinOrigin);
-        this.rightBackPin = new SoftwarePWMEmulator(this.rightBackPinOrigin);
+        this.leftBackPin = new SoftwarePWMEmulator(GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_15), GPIO);
+        this.rightBackPin = new SoftwarePWMEmulator(GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_29), GPIO);
 
         init();
     }
@@ -71,8 +70,64 @@ public class GPIOQuadCopterController implements CopterController {
         this.rightBackPin.close();
         GPIO.shutdown();
         GPIO.unprovisionPin(leftFrontPin);
-        GPIO.unprovisionPin(leftBackPinOrigin);
-        GPIO.unprovisionPin(rightBackPinOrigin);
         GPIO.unprovisionPin(rightFrontPin);
+    }
+
+    public static class SoftwarePWMEmulator {
+
+        private final Thread thread;
+        private final AtomicInteger value = new AtomicInteger();
+        private final GpioController GPIO;
+        private final GpioPinDigitalOutput pin;
+
+        private final int CYCLE_MCS = 20000;
+        private final int CYCLE_NANOS = CYCLE_MCS * 1000;
+
+        private final int DELAY_SHIFT_MS = 2;
+
+        public SoftwarePWMEmulator(final GpioPinDigitalOutput pin, final GpioController GPIO) {
+            this.pin = pin;
+            this.GPIO = GPIO;
+            this.value.set(5);
+            pin.low();
+            thread = new Thread(() -> {
+                try {
+                    while (!Thread.interrupted()) {
+                        int pulseDuration = value.get() * CYCLE_MCS;
+                        pin.high();
+                        mwait(System.nanoTime() + pulseDuration);
+                        pin.low();
+                        long deadLine = (CYCLE_NANOS - pulseDuration) + System.nanoTime();
+                        long availableMsDelay = (CYCLE_NANOS - pulseDuration) / 1000000 - DELAY_SHIFT_MS;
+                        if (availableMsDelay > 0) {
+                            Thread.sleep(availableMsDelay);
+                        }
+                        mwait(deadLine);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                pin.low();
+            });
+            thread.setPriority(Thread.MAX_PRIORITY);
+            this.thread.start();
+        }
+
+        private void mwait(final long deadline) {
+            while (true) {
+                if (System.nanoTime() >= deadline) {
+                    return;
+                }
+            }
+        }
+
+        void close() {
+            thread.interrupt();
+            GPIO.unprovisionPin(pin);
+        }
+
+        void setPwm(int v) {
+            value.set(v);
+        }
     }
 }
