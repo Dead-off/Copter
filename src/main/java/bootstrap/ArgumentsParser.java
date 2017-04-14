@@ -10,6 +10,7 @@ public class ArgumentsParser {
     private final static String ENGINES_CONTROL_OPTION = "copterControl";
     private final static String USER_CONTROL_OPTION = "userControl";
     private final static String PORT = "port";
+    private final static String SENSOR_FACTORY_OPTION = "sensors";
     final static int DEFAULT_PORT = 9276;
 
     public Arguments parse(String[] args) throws JSAPException {
@@ -21,7 +22,8 @@ public class ArgumentsParser {
         }
         return new Arguments(config.getString(USER_CONTROL_OPTION)
                 , config.getString(ENGINES_CONTROL_OPTION)
-                , config.getInt(PORT));
+                , config.getInt(PORT)
+                , config.getString(SENSOR_FACTORY_OPTION));
     }
 
 
@@ -50,9 +52,17 @@ public class ArgumentsParser {
                 .setDefault(String.valueOf(DEFAULT_PORT));
         port.setHelp("port for remote server");
 
+        FlaggedOption sensors = new FlaggedOption(SENSOR_FACTORY_OPTION)
+                .setStringParser(JSAP.STRING_PARSER)
+                .setRequired(true)
+                .setShortFlag('s')
+                .setLongFlag(JSAP.NO_LONGFLAG);
+        port.setHelp("type of sensor control factory. Values REAL or MOCK");
+
         result.registerParameter(copterControl);
         result.registerParameter(userControl);
         result.registerParameter(port);
+        result.registerParameter(sensors);
 
         return result;
     }

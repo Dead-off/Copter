@@ -3,9 +3,12 @@ package bootstrap;
 import control.CommandLineController;
 import control.NetworkController;
 import control.UserController;
-import facade.CopterModulesFactory;
-import facade.PrintControllerFactory;
-import facade.QuadEnginesFactory;
+import engine.EnginesFactory;
+import engine.PrintControllerFactory;
+import engine.QuadEnginesFactory;
+import sensors.MockSensorFactory;
+import sensors.RealSensorFactory;
+import sensors.SensorFactory;
 
 public class FactoryConfigurator {
 
@@ -18,19 +21,24 @@ public class FactoryConfigurator {
     }
 
     public void configure() {
-        CopterModulesFactory copterModulesFactory = parseEnginesFactory(arguments.outputController);
+        EnginesFactory enginesFactory = parseEnginesFactory(arguments.outputController);
         UserController userController = parseUserController(arguments.userController);
+        SensorFactory sensorFactory = parseSensorType(arguments.sensorFactory);
         if (userController == null) {
             throw new IllegalArgumentException("Illegal user controller argument!");
         }
-        if (copterModulesFactory == null) {
-            throw new IllegalArgumentException("Illegal user controller argument!");
+        if (enginesFactory == null) {
+            throw new IllegalArgumentException("Illegal engines controller argument!");
         }
-        factory.setCopterModulesFactory(copterModulesFactory);
+        if (sensorFactory == null) {
+            throw new IllegalArgumentException("Illegal sensor argument!");
+        }
+        factory.setCopterModulesFactory(enginesFactory);
         factory.setUserController(userController);
+        factory.setSensorFactory(sensorFactory);
     }
 
-    private CopterModulesFactory parseEnginesFactory(String type) {
+    private EnginesFactory parseEnginesFactory(String type) {
         switch (type) {
             case "GPIO": {
                 return new QuadEnginesFactory();
@@ -49,6 +57,18 @@ public class FactoryConfigurator {
             }
             case "CL": {
                 return new CommandLineController();
+            }
+        }
+        return null;
+    }
+
+    private SensorFactory parseSensorType(String type) {
+        switch (type) {
+            case "REAL": {
+                return new RealSensorFactory();
+            }
+            case "MOCK": {
+                return new MockSensorFactory();
             }
         }
         return null;

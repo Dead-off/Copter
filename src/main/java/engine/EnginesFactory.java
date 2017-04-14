@@ -1,12 +1,10 @@
-package facade;
+package engine;
 
 import engine.CopterController;
 import sensors.Gyroscope;
 
-public interface CopterModulesFactory {
+public interface EnginesFactory {
 
     CopterController getCopterController();
-
-    Gyroscope getGyroscope();
 
 }

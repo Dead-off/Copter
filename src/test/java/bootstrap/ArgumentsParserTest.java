@@ -17,14 +17,14 @@ public class ArgumentsParserTest {
 
     @Test
     public void parseTest() throws JSAPException {
-        String[] args = new String[]{"-c", "GPIO", "-u", "REMOTE", "-p", "1234"};
+        String[] args = new String[]{"-c", "GPIO", "-u", "REMOTE", "-p", "1234", "-s", "MOCK"};
         Arguments actual = parser.parse(args);
-        Arguments expected = new Arguments("REMOTE", "GPIO", 1234);
+        Arguments expected = new Arguments("REMOTE", "GPIO", 1234, "MOCK");
         assertEquals(expected, actual);
 
-        args = new String[]{"-u", "pew", "-c", "pewpew"};
+        args = new String[]{"-u", "pew", "-c", "pewpew", "-s", "REAL"};
         actual = parser.parse(args);
-        expected = new Arguments("pew", "pewpew", ArgumentsParser.DEFAULT_PORT);
+        expected = new Arguments("pew", "pewpew", ArgumentsParser.DEFAULT_PORT, "REAL");
         assertEquals(expected, actual);
     }
 

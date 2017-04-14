@@ -1,8 +1,7 @@
 package bootstrap;
 
 import control.CommandLineController;
-import facade.CopterModulesFactory;
-import facade.PrintControllerFactory;
+import engine.PrintControllerFactory;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

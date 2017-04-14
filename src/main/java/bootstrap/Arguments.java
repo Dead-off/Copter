@@ -4,12 +4,14 @@ public class Arguments {
 
     public final String userController;
     public final String outputController;
+    public final String sensorFactory;
     public final int port;
 
-    public Arguments(String userController, String outputController, int port) {
+    public Arguments(String userController, String outputController, int port, String sensorFactory) {
         this.userController = userController;
         this.outputController = outputController;
         this.port = port;
+        this.sensorFactory = sensorFactory;
     }
 
     @Override

@@ -1,30 +1,40 @@
 package bootstrap;
 
 import control.UserController;
-import facade.CopterModulesFactory;
+import engine.EnginesFactory;
+import sensors.SensorFactory;
 
 public class MainFactory {
 
     public static final MainFactory INSTANCE = new MainFactory();
 
-    private CopterModulesFactory copterModulesFactory;
+    private EnginesFactory copterModulesFactory;
+    private SensorFactory sensorFactory;
     private UserController userController;
 
     private MainFactory() {
     }
 
-    public CopterModulesFactory getCopterModulesFactory() {
+    public EnginesFactory getCopterModulesFactory() {
         if (copterModulesFactory == null) {
             throw new RuntimeException("Main factory is not configured!");
         }
         return copterModulesFactory;
     }
 
-    public boolean isConfigured() {
-        return copterModulesFactory != null && userController != null;
+    public SensorFactory getSensorFactory() {
+        return sensorFactory;
     }
 
-    public void setCopterModulesFactory(CopterModulesFactory copterModulesFactory) {
+    public void setSensorFactory(SensorFactory sensorFactory) {
+        this.sensorFactory = sensorFactory;
+    }
+
+    public boolean isConfigured() {
+        return copterModulesFactory != null && userController != null && sensorFactory != null;
+    }
+
+    public void setCopterModulesFactory(EnginesFactory copterModulesFactory) {
         this.copterModulesFactory = copterModulesFactory;
     }
 

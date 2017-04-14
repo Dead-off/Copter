@@ -24,7 +24,7 @@ public class QuadCopter implements Copter {
 
     public QuadCopter() {
         this.copterController = MainFactory.INSTANCE.getCopterModulesFactory().getCopterController();
-        this.gyroscope = MainFactory.INSTANCE.getCopterModulesFactory().getGyroscope();
+        this.gyroscope = MainFactory.INSTANCE.getSensorFactory().getGyroscope();
         this.powerCalculator = new QuadPowerCalculator();
         this.offsetCalculator = new OffsetCalculatorImpl();
     }
