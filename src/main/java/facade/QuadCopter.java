@@ -50,8 +50,8 @@ public class QuadCopter implements Copter {
 
     private void calculateEnginesPowerAndSet() {
 
-        RotationAngles gyroscopeData = lastGyroscopeData.get();
-        RotationAngles clientOffset = lastClientOffset.get();
+        RotationAngles gyroscopeData = getGyroscopeData();
+        RotationAngles clientOffset = getClientOffset();
 
         RotationAngles sum = new RotationAngles(
                 gyroscopeData.getX().subtract(clientOffset.getX()),
@@ -63,6 +63,19 @@ public class QuadCopter implements Copter {
         synchronized (this) {
             copterController.setEnginesPower(calculatePower);
         }
+    }
+
+    private RotationAngles getGyroscopeData() {
+        return getOrElse(lastGyroscopeData, RotationAngles.ZERO);
+    }
+
+    private <T> T getOrElse(AtomicReference<T> reference, T defaultValue) {
+        T result = reference.get();
+        return result == null ? defaultValue : result;
+    }
+
+    private RotationAngles getClientOffset() {
+        return getOrElse(lastClientOffset, RotationAngles.ZERO);
     }
 
     @Override

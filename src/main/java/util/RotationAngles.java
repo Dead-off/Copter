@@ -15,6 +15,8 @@ public class RotationAngles {
     private final Angle y;
     private final Angle z;
 
+    public final static RotationAngles ZERO = new RotationAngles(0, 0, 0);
+
     public RotationAngles(Angle x, Angle y, Angle z) {
         this.x = x;
         this.y = y;
