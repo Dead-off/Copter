@@ -8,10 +8,10 @@ import java.util.Random;
 public class RandomGyroscope implements Gyroscope {
 
     private final static double MAX_ANGLE = 30;
-    private final static double MIN_ANGLE = 30;
+    private final static double MIN_ANGLE = -30;
     private final static double MAX_DELTA_ON_STEP = 10;
     private final Random random = new Random();
-    private RotationAngles lastAngles = new RotationAngles(new Angle(0), new Angle(0), new Angle(0));
+    private RotationAngles lastAngles = RotationAngles.ZERO;
 
     @Override
     public RotationAngles getData() {
