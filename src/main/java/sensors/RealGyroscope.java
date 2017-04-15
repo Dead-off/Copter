@@ -10,6 +10,10 @@ import java.io.IOException;
 public class RealGyroscope implements Gyroscope {
 
     public final static Gyroscope INSTANCE = new RealGyroscope();
+    private final static int X_OFFSET = -270;
+    private final static int Y_OFFSET = -315;
+    private final static int Z_OFFSET = -365;
+
     private final I2CDevice device;
 
     private RealGyroscope() {
@@ -41,12 +45,16 @@ public class RealGyroscope implements Gyroscope {
             e.printStackTrace();
             return RotationAngles.ZERO;
         }
-        int xAngle = 256 * (int) gyroData[1] + (int) gyroData[0];
-        int yAngle = 256 * (int) gyroData[3] + (int) gyroData[2];
-        int zAngle = 256 * (int) gyroData[5] + (int) gyroData[4];
-        System.out.println("x=" + xAngle);
-        System.out.println("y=" + yAngle);
-        System.out.println("z=" + zAngle);
+        int xVelocity = 256 * (int) gyroData[1] + (int) gyroData[0];
+        int yVelocity = 256 * (int) gyroData[3] + (int) gyroData[2];
+        int zVelocity = 256 * (int) gyroData[5] + (int) gyroData[4];
+        xVelocity -= X_OFFSET;
+        yVelocity -= Y_OFFSET;
+        zVelocity -= Z_OFFSET;
+
+        System.out.println("x=" + xVelocity);
+        System.out.println("y=" + yVelocity);
+        System.out.println("z=" + zVelocity);
         return RotationAngles.ZERO;
     }
 }
