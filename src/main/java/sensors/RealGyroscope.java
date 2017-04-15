@@ -41,9 +41,9 @@ public class RealGyroscope implements Gyroscope {
             e.printStackTrace();
             return RotationAngles.ZERO;
         }
-        int xAngle = 256 * (int) gyroData[0] + (int) gyroData[1];
-        int yAngle = 256 * (int) gyroData[2] + (int) gyroData[3];
-        int zAngle = 256 * (int) gyroData[4] + (int) gyroData[5];
+        int xAngle = 256 * (int) gyroData[1] + (int) gyroData[0];
+        int yAngle = 256 * (int) gyroData[3] + (int) gyroData[2];
+        int zAngle = 256 * (int) gyroData[5] + (int) gyroData[4];
         System.out.println("x=" + xAngle);
         System.out.println("y=" + yAngle);
         System.out.println("z=" + zAngle);
