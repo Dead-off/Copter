@@ -16,7 +16,7 @@ public class RealGyroscope implements Gyroscope {
         I2CDevice deviceLocal = null;
         try {
             I2CBus bus = I2CFactory.getInstance(I2CBus.BUS_1);
-            deviceLocal = bus.getDevice(0x69);
+            deviceLocal = bus.getDevice(0x68);
             deviceLocal.write(0x20, (byte)15);
         } catch (Exception e) {
             e.printStackTrace();
