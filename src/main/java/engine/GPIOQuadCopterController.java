@@ -14,18 +14,18 @@ public class GPIOQuadCopterController implements CopterController {
     private final static int ZERO_POWER = DEFAULT_RANGE / 20;
 
     private final GpioController GPIO;
-    private final GpioPinPwmOutput leftFrontPin;
-    private final GpioPinPwmOutput rightFrontPin;
+    private final SoftwarePWMEmulator leftFrontPin;
+    private final SoftwarePWMEmulator rightFrontPin;
 
-    private final SoftwarePWMEmulator leftBackPin;
-    private final SoftwarePWMEmulator rightBackPin;
+    private final GpioPinPwmOutput leftBackPin;
+    private final GpioPinPwmOutput rightBackPin;
 
     GPIOQuadCopterController(GpioController GPIO) {
         this.GPIO = GPIO;
-        this.leftFrontPin = GPIO.provisionPwmOutputPin(RaspiPin.GPIO_26);
-        this.rightFrontPin = GPIO.provisionPwmOutputPin(RaspiPin.GPIO_23);
-        this.leftBackPin = new SoftwarePWMEmulator(GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_15), GPIO);
-        this.rightBackPin = new SoftwarePWMEmulator(GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_29), GPIO);
+        this.rightBackPin = GPIO.provisionPwmOutputPin(RaspiPin.GPIO_26);
+        this.leftBackPin = GPIO.provisionPwmOutputPin(RaspiPin.GPIO_23);
+        this.leftFrontPin = new SoftwarePWMEmulator(GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_15), GPIO);
+        this.rightFrontPin = new SoftwarePWMEmulator(GPIO.provisionDigitalOutputPin(RaspiPin.GPIO_29), GPIO);
 
         init();
     }
@@ -36,13 +36,13 @@ public class GPIOQuadCopterController implements CopterController {
 
     private void init() {
 
-        this.leftFrontPin.setMode(PinMode.PWM_OUTPUT);
-        this.leftFrontPin.setPwmRange(DEFAULT_RANGE);
-        this.leftFrontPin.setPwm(ZERO_POWER);
+        this.leftBackPin.setMode(PinMode.PWM_OUTPUT);
+        this.leftBackPin.setPwmRange(DEFAULT_RANGE);
+        this.leftBackPin.setPwm(ZERO_POWER);
 
-        this.rightFrontPin.setMode(PinMode.PWM_OUTPUT);
-        this.rightFrontPin.setPwmRange(DEFAULT_RANGE);
-        this.rightFrontPin.setPwm(ZERO_POWER);
+        this.rightBackPin.setMode(PinMode.PWM_OUTPUT);
+        this.rightBackPin.setPwmRange(DEFAULT_RANGE);
+        this.rightBackPin.setPwm(ZERO_POWER);
 
         this.leftBackPin.setPwm(ZERO_POWER);
         this.rightBackPin.setPwm(ZERO_POWER);
@@ -66,11 +66,11 @@ public class GPIOQuadCopterController implements CopterController {
 
     @Override
     public void close() {
-        this.leftBackPin.close();
-        this.rightBackPin.close();
+        this.leftFrontPin.close();
+        this.rightFrontPin.close();
         GPIO.shutdown();
-        GPIO.unprovisionPin(leftFrontPin);
-        GPIO.unprovisionPin(rightFrontPin);
+        GPIO.unprovisionPin(rightBackPin);
+        GPIO.unprovisionPin(leftBackPin);
     }
 
     public static class SoftwarePWMEmulator {
