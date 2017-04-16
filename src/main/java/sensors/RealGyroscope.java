@@ -6,55 +6,47 @@ import com.pi4j.io.i2c.I2CFactory;
 import util.RotationAngles;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class RealGyroscope implements Gyroscope {
 
-    public final static Gyroscope INSTANCE = new RealGyroscope();
-    private final static int X_OFFSET = -270;
-    private final static int Y_OFFSET = -315;
-    private final static int Z_OFFSET = -365;
+    private final static String FILE_PATH = "/home/pi/Copter/gyro.data";
+    private final static String SEPARATOR = ":";
 
-    private final I2CDevice device;
+    public final static Gyroscope INSTANCE = new RealGyroscope();
 
     private RealGyroscope() {
-        I2CDevice deviceLocal = null;
-        try {
-            I2CBus bus = I2CFactory.getInstance(I2CBus.BUS_1);
-            deviceLocal = bus.getDevice(0x68);
-            deviceLocal.write(0x20, (byte)15);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.device = deviceLocal;
+
     }
 
     @Override
     public RotationAngles getData() {
-        if (device == null) {
-            return RotationAngles.ZERO;
-        }
-        byte[] gyroData = new byte[6];
+        List<String> content;
         try {
-            gyroData[0] = (byte) device.read(0x28);
-            gyroData[1] = (byte) device.read(0x29);
-            gyroData[2] = (byte) device.read(0x2a);
-            gyroData[3] = (byte) device.read(0x2b);
-            gyroData[4] = (byte) device.read(0x2c);
-            gyroData[5] = (byte) device.read(0x2d);
+            content = Files.readAllLines(Paths.get(FILE_PATH));
         } catch (IOException e) {
             e.printStackTrace();
             return RotationAngles.ZERO;
         }
-        int xVelocity = 256 * (int) gyroData[1] + (int) gyroData[0];
-        int yVelocity = 256 * (int) gyroData[3] + (int) gyroData[2];
-        int zVelocity = 256 * (int) gyroData[5] + (int) gyroData[4];
-        xVelocity -= X_OFFSET;
-        yVelocity -= Y_OFFSET;
-        zVelocity -= Z_OFFSET;
-
-        System.out.println("x=" + xVelocity);
-        System.out.println("y=" + yVelocity);
-        System.out.println("z=" + zVelocity);
+        if (content.size() == 0) {
+            System.out.println("read error, file is empty");
+            return RotationAngles.ZERO;
+        }
+        String data = content.get(0);
+        String[] xyz = data.split(SEPARATOR);
+        if (xyz.length != 2) {
+            return RotationAngles.ZERO;
+        }
+        try {
+            double x = Double.parseDouble(xyz[0]);
+            double y = Double.parseDouble(xyz[1]);
+            double z = Double.parseDouble(xyz[2]);
+            return new RotationAngles(x,y,z);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return RotationAngles.ZERO;
     }
 }
