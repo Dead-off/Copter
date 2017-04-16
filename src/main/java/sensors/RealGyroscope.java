@@ -36,7 +36,7 @@ public class RealGyroscope implements Gyroscope {
         }
         String data = content.get(0);
         String[] xyz = data.split(SEPARATOR);
-        if (xyz.length != 2) {
+        if (xyz.length != 3) {
             return RotationAngles.ZERO;
         }
         try {
