@@ -62,4 +62,8 @@ public class RotationAngles {
         result = 31 * result + z.hashCode();
         return result;
     }
+
+    public RotationAngles add(RotationAngles other) {
+        return new RotationAngles(x.add(other.getX()), y.add(other.getY()), z.add(other.getZ()));
+    }
 }

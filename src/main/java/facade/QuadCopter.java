@@ -44,6 +44,7 @@ public class QuadCopter implements Copter {
     @Override
     public void handleDirectionChange(CopterDirection.Direction newDirection) {
         lastClientOffset.set(offsetCalculator.calculateOffset(newDirection));
+//        lastClientOffset.set(getClientOffset().add(offsetCalculator.calculateOffset(newDirection)));
         this.power = newDirection.getPower();
         calculateEnginesPowerAndSet();
     }
