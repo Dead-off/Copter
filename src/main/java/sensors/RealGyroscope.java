@@ -43,6 +43,7 @@ public class RealGyroscope implements Gyroscope {
             double x = Double.parseDouble(xyz[0]);
             double y = Double.parseDouble(xyz[1]);
             double z = Double.parseDouble(xyz[2]);
+            System.out.println(x + " " + y + " " + z);
             return new RotationAngles(x,y,z);
         } catch (Exception e) {
             e.printStackTrace();
