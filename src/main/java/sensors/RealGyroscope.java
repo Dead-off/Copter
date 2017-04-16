@@ -27,9 +27,9 @@ public class RealGyroscope implements Gyroscope {
     public RotationAngles getData() {
         RotationAngles newAngles = getAngles();
         RotationAngles result = new RotationAngles(
-                GAMMA * lastAngles.getX().getDegrees() + (1 - GAMMA) * (newAngles.getX().getDegrees() - lastAngles.getX().getDegrees()),
-                GAMMA * lastAngles.getY().getDegrees() + (1 - GAMMA) * (newAngles.getY().getDegrees() - lastAngles.getY().getDegrees()),
-                GAMMA * lastAngles.getZ().getDegrees() + (1 - GAMMA) * (newAngles.getZ().getDegrees() - lastAngles.getZ().getDegrees())
+                GAMMA * lastAngles.getX().getDegrees() + (1 - GAMMA) * newAngles.getX().getDegrees(),
+                GAMMA * lastAngles.getY().getDegrees() + (1 - GAMMA) * newAngles.getY().getDegrees(),
+                GAMMA * lastAngles.getZ().getDegrees() + (1 - GAMMA) * newAngles.getZ().getDegrees()
         );
         System.out.println(newAngles);
         System.out.println(result);
