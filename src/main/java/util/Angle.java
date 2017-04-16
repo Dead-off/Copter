@@ -48,4 +48,9 @@ public class Angle {
         long temp = Double.doubleToLongBits(degrees);
         return (int) (temp ^ (temp >>> 32));
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getDegrees());
+    }
 }

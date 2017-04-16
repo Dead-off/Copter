@@ -66,4 +66,9 @@ public class RotationAngles {
     public RotationAngles add(RotationAngles other) {
         return new RotationAngles(x.add(other.getX()), y.add(other.getY()), z.add(other.getZ()));
     }
+
+    @Override
+    public String toString() {
+        return x + " " + y + " " + z;
+    }
 }
