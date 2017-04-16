@@ -31,6 +31,9 @@ public class RealGyroscope implements Gyroscope {
                 GAMMA * lastAngles.getY().getDegrees() + (1 - GAMMA) * (newAngles.getY().getDegrees() - lastAngles.getY().getDegrees()),
                 GAMMA * lastAngles.getZ().getDegrees() + (1 - GAMMA) * (newAngles.getZ().getDegrees() - lastAngles.getZ().getDegrees())
         );
+        System.out.println(newAngles.getX() + " " + newAngles.getY() + " " + newAngles.getZ());
+        System.out.println(result.getX() + " " + result.getY() + " " + result.getZ());
+        System.out.println("--------------------------------------------");
         lastAngles = result;
         return result;
     }
