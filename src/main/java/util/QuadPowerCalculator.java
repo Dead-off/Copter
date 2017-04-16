@@ -3,7 +3,7 @@ package util;
 public class QuadPowerCalculator implements PowerCalculator {
 
     static final double DEFAULT_POWER = 0.7;
-    static final double MAX_MULTIPLIER = 0.15;
+    static final double MAX_MULTIPLIER = 0.75;
 
     @Override
     public QuadEnginePowerContainer calculateEnginesPower(RotationAngles angles, double power) {

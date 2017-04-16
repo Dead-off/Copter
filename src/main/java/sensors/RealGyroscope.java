@@ -14,8 +14,10 @@ public class RealGyroscope implements Gyroscope {
 
     private final static String FILE_PATH = "/home/pi/Copter/gyro.data";
     private final static String SEPARATOR = ":";
+    private final static double GAMMA = 0.90;
 
     public final static Gyroscope INSTANCE = new RealGyroscope();
+    private RotationAngles lastAngles = RotationAngles.ZERO;
 
     private RealGyroscope() {
 
@@ -23,6 +25,17 @@ public class RealGyroscope implements Gyroscope {
 
     @Override
     public RotationAngles getData() {
+        RotationAngles newAngles = getAngles();
+        RotationAngles result = new RotationAngles(
+                GAMMA * lastAngles.getX().getDegrees() + (1 - GAMMA) * (newAngles.getX().getDegrees() - lastAngles.getX().getDegrees()),
+                GAMMA * lastAngles.getY().getDegrees() + (1 - GAMMA) * (newAngles.getY().getDegrees() - lastAngles.getY().getDegrees()),
+                GAMMA * lastAngles.getZ().getDegrees() + (1 - GAMMA) * (newAngles.getZ().getDegrees() - lastAngles.getZ().getDegrees())
+        );
+        lastAngles = result;
+        return result;
+    }
+
+    public RotationAngles getAngles() {
         List<String> content;
         try {
             content = Files.readAllLines(Paths.get(FILE_PATH));
@@ -43,8 +56,7 @@ public class RealGyroscope implements Gyroscope {
             double x = Double.parseDouble(xyz[0]);
             double y = Double.parseDouble(xyz[1]);
             double z = Double.parseDouble(xyz[2]);
-            System.out.println(x + " " + y + " " + z);
-            return new RotationAngles(x,y,z);
+            return new RotationAngles(x, y, z);
         } catch (Exception e) {
             e.printStackTrace();
         }
