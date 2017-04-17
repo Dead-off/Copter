@@ -97,8 +97,15 @@ public class QuadPowerCalculator implements PowerCalculator {
         }
 
         private double getMultiplier(Angle angle, Angle previous) {
-            return 1 + Math.abs(P * angle.getDegrees());
-            //            return 1 + Math.abs(P * angle.getDegrees() + D * deltaTime * (angle.getDegrees() - previous.getDegrees()));
+            double velocity = 1000.0 * (previous.getDegrees() - angle.getDegrees()) / deltaTime;//degrees/second
+            if (velocity < 0) {
+                //Квадриик висел под углом, должен был начать выправляться, но на деле завалился ещё сильнее
+                //по правильному наверно стоит в таком случае увеличивать корректировочный коэифиент скорости вплоть до 2
+                //при скорости стремящейся к минус бесконечности, но пока пусть будет просто игнор скорости.
+                velocity = 0;
+            }
+            double velocityCorrect = 1.0 / (D * velocity + 1);//velocity=[0, +inf] -> correct = [1,0]
+            return 1 + Math.abs(P * angle.getDegrees()) * velocityCorrect;
         }
 
         private double getValueBetweenZeroAndOne(double value) {
