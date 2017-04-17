@@ -12,17 +12,18 @@ public class PowerCalculatorTest extends Assert {
     @Test
     public void calculatePowerEngineTest() {
         PowerCalculator calculator = new QuadPowerCalculator();
-
         RotationAngles angles = new RotationAngles(10, 10, 10);
         QuadEnginePowerContainer actual = calculator.calculateEnginesPower(angles, 0);
         QuadEnginePowerContainer expected = new QuadEnginePowerContainer(0, 0, 0, 0);
         assertTrue(actual.equalsWithEps(expected, EPS));
 
+        calculator = new QuadPowerCalculator();
         angles = new RotationAngles(360, 360, -360);
         actual = calculator.calculateEnginesPower(angles, 1);
         expected = new QuadEnginePowerContainer(DEFAULT_POWER, DEFAULT_POWER, DEFAULT_POWER, DEFAULT_POWER);
         assertTrue(actual.equalsWithEps(expected, EPS));
 
+        calculator = new QuadPowerCalculator();
         actual = calculator.calculateEnginesPower(new RotationAngles(10, 0, 0), 0.8);
         expected = new QuadEnginePowerContainer(
                 DEFAULT_POWER * 0.8 / (1 + MULTIPLIER * 10.0 / 180)
@@ -31,6 +32,7 @@ public class PowerCalculatorTest extends Assert {
                 , DEFAULT_POWER * 0.8 * (1 + MULTIPLIER * 10.0 / 180));
         assertTrue(actual.equalsWithEps(expected, EPS));
 
+        calculator = new QuadPowerCalculator();
         actual = calculator.calculateEnginesPower(new RotationAngles(10, 5, -20), 0.9);
         double xCorrect = (1 + MULTIPLIER * 10.0 / 180);
         double yCorrect = (1 + MULTIPLIER * 5.0 / 180);
@@ -42,7 +44,7 @@ public class PowerCalculatorTest extends Assert {
                 , DEFAULT_POWER * 0.9 * xCorrect * yCorrect * zCorrect);
         assertTrue(expected.equalsWithEps(actual, EPS));
 
-
+        calculator = new QuadPowerCalculator();
         actual = calculator.calculateEnginesPower(new RotationAngles(-180, 0, 0), 0.8);
         xCorrect = (1 + MULTIPLIER * 180 / 180);
         expected = new QuadEnginePowerContainer(
