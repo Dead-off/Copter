@@ -6,16 +6,23 @@ public class QuadPowerCalculator implements PowerCalculator {
     static final double P = 0.25;
     static final double D = 0.05;
 
-    private RotationAngles previous = RotationAngles.ZERO;
+    private RotationAngles previous = null;
+    private long lastTime;
 
     @Override
-    public QuadEnginePowerContainer calculateEnginesPower(RotationAngles angles, double power) {
+    public synchronized QuadEnginePowerContainer calculateEnginesPower(RotationAngles angles, double power) {
         angles = angles.getNormalized();
-        Builder builder = new Builder();
-        builder.rotate(angles.getZ());
-        builder.moveLeftRight(angles.getY());
-        builder.moveBackForward(angles.getX());
+        if (previous == null) {
+            previous = angles;
+            lastTime = System.currentTimeMillis();
+        }
+        long currentTime = System.currentTimeMillis();
+        Builder builder = new Builder(currentTime - lastTime);
+        builder.rotate(angles.getZ(), previous.getZ());
+        builder.moveLeftRight(angles.getY(), previous.getY());
+        builder.moveBackForward(angles.getX(), previous.getX());
         previous = angles;
+        lastTime = currentTime;
         return builder.build(power);
     }
 
@@ -26,8 +33,14 @@ public class QuadPowerCalculator implements PowerCalculator {
         double rightFront = DEFAULT_POWER;//ccw
         double rightBack = DEFAULT_POWER;//cw
 
-        void rotate(Angle angle) {
-            double multiplier = getMultiplier(angle);
+        private final long deltaTime;
+
+        private Builder(long deltaTime) {
+            this.deltaTime = deltaTime;
+        }
+
+        void rotate(Angle angle, Angle previous) {
+            double multiplier = getMultiplier(angle, previous);
             if (multiplier == 0) {
                 return;
             }
@@ -45,8 +58,8 @@ public class QuadPowerCalculator implements PowerCalculator {
             }
         }
 
-        void moveLeftRight(Angle angle) {
-            double multiplier = getMultiplier(angle);
+        void moveLeftRight(Angle angle, Angle previous) {
+            double multiplier = getMultiplier(angle, previous);
             if (multiplier == 0) {
                 return;
             }
@@ -64,8 +77,8 @@ public class QuadPowerCalculator implements PowerCalculator {
             }
         }
 
-        void moveBackForward(Angle angle) {
-            double multiplier = getMultiplier(angle);
+        void moveBackForward(Angle angle, Angle previous) {
+            double multiplier = getMultiplier(angle, previous);
             if (multiplier == 0) {
                 return;
             }
@@ -83,8 +96,8 @@ public class QuadPowerCalculator implements PowerCalculator {
             }
         }
 
-        private double getMultiplier(Angle angle) {
-            return 1+Math.abs(P *angle.getDegrees() / 180);
+        private double getMultiplier(Angle angle, Angle previous) {
+            return 1+Math.abs(P *angle.getDegrees() / 180 + D * (angle.getDegrees() - previous.getDegrees()));
         }
 
         private double getValueBetweenZeroAndOne(double value) {
