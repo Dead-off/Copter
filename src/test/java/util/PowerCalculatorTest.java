@@ -7,7 +7,7 @@ public class PowerCalculatorTest extends Assert {
 
     private final static double EPS = 0.000001;
     private final static double DEFAULT_POWER = QuadPowerCalculator.DEFAULT_POWER;
-    private final static double MULTIPLIER = QuadPowerCalculator.MAX_MULTIPLIER;
+    private final static double MULTIPLIER = QuadPowerCalculator.P;
 
     @Test
     public void calculatePowerEngineTest() {

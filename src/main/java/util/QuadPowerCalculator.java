@@ -3,7 +3,10 @@ package util;
 public class QuadPowerCalculator implements PowerCalculator {
 
     static final double DEFAULT_POWER = 0.7;
-    static final double MAX_MULTIPLIER = 0.75;
+    static final double P = 0.25;
+    static final double D = 0.05;
+
+    private RotationAngles previous = RotationAngles.ZERO;
 
     @Override
     public QuadEnginePowerContainer calculateEnginesPower(RotationAngles angles, double power) {
@@ -12,6 +15,7 @@ public class QuadPowerCalculator implements PowerCalculator {
         builder.rotate(angles.getZ());
         builder.moveLeftRight(angles.getY());
         builder.moveBackForward(angles.getX());
+        previous = angles;
         return builder.build(power);
     }
 
@@ -80,7 +84,7 @@ public class QuadPowerCalculator implements PowerCalculator {
         }
 
         private double getMultiplier(Angle angle) {
-            return 1+Math.abs(MAX_MULTIPLIER*angle.getDegrees() / 180);
+            return 1+Math.abs(P *angle.getDegrees() / 180);
         }
 
         private double getValueBetweenZeroAndOne(double value) {
