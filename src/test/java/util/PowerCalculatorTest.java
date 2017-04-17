@@ -54,4 +54,7 @@ public class PowerCalculatorTest extends Assert {
                 , DEFAULT_POWER * 0.8 * xCorrect);
         assertTrue(expected.equalsWithEps(actual, EPS));
     }
+
+    // TODO: 17.04.17 add test with velocity calculation
+
 }
