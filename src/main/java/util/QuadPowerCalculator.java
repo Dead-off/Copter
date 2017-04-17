@@ -3,7 +3,7 @@ package util;
 public class QuadPowerCalculator implements PowerCalculator {
 
     static final double DEFAULT_POWER = 0.7;
-    static final double P = 0.25;
+    static final double P = 0.25 / 180;
     static final double D = 0.05;
 
     private RotationAngles previous = null;
@@ -97,7 +97,8 @@ public class QuadPowerCalculator implements PowerCalculator {
         }
 
         private double getMultiplier(Angle angle, Angle previous) {
-            return 1+Math.abs(P *angle.getDegrees() / 180 + D * (angle.getDegrees() - previous.getDegrees()));
+            return 1 + Math.abs(P * angle.getDegrees());
+            //            return 1 + Math.abs(P * angle.getDegrees() + D * deltaTime * (angle.getDegrees() - previous.getDegrees()));
         }
 
         private double getValueBetweenZeroAndOne(double value) {
